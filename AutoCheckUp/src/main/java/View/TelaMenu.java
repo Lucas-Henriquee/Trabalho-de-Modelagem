@@ -1,9 +1,12 @@
 package View;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
 
-public class TelaMenu {
+public class TelaMenu implements MouseListener {
 
      private JPanel jpPlano;
      private JPanel jpPanel1;
@@ -11,6 +14,8 @@ public class TelaMenu {
      private JPanel jpPanel3;
      private JPanel jpPanel4;
      private JPanel jpPanel5;
+
+     private JLabel jlAcoes;
 
      public TelaMenu() {
 
@@ -141,12 +146,48 @@ public class TelaMenu {
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(30, 132, 0, 0);
 
-          JLabel jlAcoes = new JLabel(new ImageIcon("src/main/java/Images/botaoAcoes.png"));
+          jlAcoes = new JLabel(new ImageIcon("src/main/java/Images/botaoAcoes.png"));
           jlAcoes.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlAcoes.addMouseListener(this);
 
           layout.gridy = 0;
           jpPanel5.add(jlAcoes, layout);
 
+     }
+
+     @Override
+     public void mouseClicked(MouseEvent e) {
+          if (e.getSource() == jlAcoes) {
+               new TelaCadastroCarro();
+          }
+     }
+
+     @Override
+     public void mousePressed(MouseEvent e) {
+          if (e.getSource() == jlAcoes) {
+               // faz nada
+          }
+     }
+
+     @Override
+     public void mouseReleased(MouseEvent e) {
+          if (e.getSource() == jlAcoes) {
+               // faz nada
+          }
+     }
+
+     @Override
+     public void mouseEntered(MouseEvent e) {
+          if (e.getSource() == jlAcoes) {
+               // faz nada
+          }
+     }
+
+     @Override
+     public void mouseExited(MouseEvent e) {
+          if (e.getSource() == jlAcoes) {
+               // faz nada
+          }
      }
 
 }

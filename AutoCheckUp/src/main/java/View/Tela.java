@@ -23,8 +23,6 @@ public class Tela {
           visor.setUndecorated(true);
           visor.setOpacity(0.5f);
           visor.setBackground(new Color(0, 0, 0, 0));
-
           new TelaEntrada();
-          // new TelaCadastro();
      }
 }
