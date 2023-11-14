@@ -19,7 +19,7 @@ public class Veiculo {
 
 
     //Construtor
-    public Veiculo(){
+    public Veiculo() {
         this.placa = "";
         this.modelo = "";
         this.tipoCombustivel = "";
@@ -37,7 +37,7 @@ public class Veiculo {
      * Atualiza a km do veiculo e a data da ultima atualização.
      * Retorna IllegalArgumentException caso km seja menor que a quilometragem atual.
      */
-    public void attKm(int km){
+    public void attKm(int km) {
         if(km < this.quilometragem){
             throw new IllegalArgumentException();
         }else{
@@ -46,22 +46,21 @@ public class Veiculo {
         }
     }
 
-    public void addRevisao(Revisao revisao){
+    public void addRevisao(Revisao revisao) {
         this.revisoes.add(revisao);
     }
 
-    public void addServico(Servico servico){
+    public void addServico(Servico servico) {
         this.servicos.add(servico);
     }
 
-    public boolean removeRevisao(Revisao revisao){
+    public boolean removeRevisao(Revisao revisao) {
         return revisoes.remove(revisao);
     }
 
-    public boolean removeServico(Servico servico){
+    public boolean removeServico(Servico servico) {
         return servicos.remove(servico);
     }
-
 
     //Gets e sets
     public void setAnoFab(int anoFab) {

@@ -16,7 +16,7 @@ public class VeiculoTest {
 
     @Test
     void testRevisoes(){
-        Revisao rev = new Revisao();
+        Revisao rev = new Revisao(0,0);
         veiculo.addRevisao(rev);
 
         if(veiculo.getRevisoes().indexOf(rev) == -1){
