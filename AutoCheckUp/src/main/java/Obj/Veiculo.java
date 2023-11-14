@@ -1,5 +1,7 @@
 package Obj;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Veiculo {
 
@@ -12,17 +14,30 @@ public class Veiculo {
     private Calendar ultimaAtualizacao;
     private String   observacao;
 
+    private List<Revisao>  revisoes;
+    private List<Servico>  servicos;
+
 
     //Construtor
     public Veiculo(){
+        this.placa = "";
+        this.modelo = "";
+        this.tipoCombustivel = "";
+        this.quilometragem = 0;
+        this.anoFab = 0;
+        this.anoModelo = 0;
         this.ultimaAtualizacao = Calendar.getInstance();
+        this.observacao = "";
+
+        this.revisoes = new LinkedList<Revisao>();
+        this.servicos = new LinkedList<Servico>();
     }
 
     /**
      * Atualiza a km do veiculo e a data da ultima atualização.
      * Retorna IllegalArgumentException caso km seja menor que a quilometragem atual.
      */
-    public void addKm(int km){
+    public void attKm(int km){
         if(km < this.quilometragem){
             throw new IllegalArgumentException();
         }else{
@@ -31,7 +46,24 @@ public class Veiculo {
         }
     }
 
-    //Get e set
+    public void addRevisao(Revisao revisao){
+        this.revisoes.add(revisao);
+    }
+
+    public void addServico(Servico servico){
+        this.servicos.add(servico);
+    }
+
+    public boolean removeRevisao(Revisao revisao){
+        return revisoes.remove(revisao);
+    }
+
+    public boolean removeServico(Servico servico){
+        return servicos.remove(servico);
+    }
+
+
+    //Gets e sets
     public void setAnoFab(int anoFab) {
         this.anoFab = anoFab;
     }
@@ -56,6 +88,14 @@ public class Veiculo {
         this.tipoCombustivel = tipoCombustivel;
     }
 
+    public List<Revisao> getRevisoes() {
+        return this.revisoes;
+    }
+
+    public List<Servico> getServicos() {
+        return this.servicos;
+    }
+
     public int getAnoFab() {
         return anoFab;
     }
@@ -74,7 +114,7 @@ public class Veiculo {
         return placa;
     }
 
-    public int getQuilometragem() {
+    public int getKm() {
         return quilometragem;
     }
 
