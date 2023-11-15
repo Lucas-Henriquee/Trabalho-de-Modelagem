@@ -1,4 +1,6 @@
 
+import java.util.Calendar;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,8 +37,7 @@ public class VeiculoTest {
 
     @Test
     void testServicos(){
-        Servico serv = new Servico();
-        
+        Servico serv = new Servico(0,Calendar.getInstance());
         veiculo.addServico(serv);
         if(veiculo.getServicos().indexOf(serv) == -1){
             Assertions.assertTrue(false);

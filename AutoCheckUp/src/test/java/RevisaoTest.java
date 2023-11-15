@@ -15,6 +15,12 @@ public class RevisaoTest {
     }
 
     @Test
+    public void testAtualiza(){
+        revisao.atualiza(6760, Calendar.getInstance());
+        Assertions.assertEquals(6760, revisao.getKmUltimaRevisao());
+    }
+
+    @Test
     public void testDiffMeses(){
 
         Calendar data_1 = Calendar.getInstance();

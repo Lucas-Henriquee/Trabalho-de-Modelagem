@@ -25,12 +25,10 @@ public class Revisao {
      * Retorna IllegalArgumentException caso km seja menor que a quilometragem atual.
      * @param km - Quilometragem em que foi feita a revisão.
      */
-    public void atualiza(int km) {
+    public void atualiza(int km, Calendar data) {
         if(this.kmUltimaRevisao < km){
             this.kmUltimaRevisao = km;
-            this.dataUltimaRevisao = Calendar.getInstance();
-        }else{
-            throw new IllegalArgumentException();
+            this.dataUltimaRevisao = data;
         }
     }
     /**
@@ -61,9 +59,6 @@ public class Revisao {
         int ano = data_1.get(Calendar.YEAR);
         int mesAtual = data_2.get(Calendar.MONTH);
         int anoAtual = data_2.get(Calendar.YEAR);
-
-        System.out.println("Ano: " + ano);
-        System.out.println("AnoAtual: " + anoAtual);
 
         int diffDias = data_2.get(Calendar.DAY_OF_MONTH) - data_1.get(Calendar.DAY_OF_MONTH);
         int diffMeses = (mesAtual + (12 *(anoAtual - ano))) - mes;
