@@ -1,8 +1,9 @@
 package Obj;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Revisao {
+public class Revisao implements Serializable {
     
     private int intervaloMeses;    
     private int intervaloKm;
@@ -10,14 +11,14 @@ public class Revisao {
     private Calendar dataUltimaRevisao;
     private int      kmUltimaRevisao;
 
-    private String observacao;
+    private String descricao;
 
-    public Revisao(int intervaloKm, int intevaloMeses){
+    public Revisao(int intervaloKm, int intevaloMeses) {
         this.intervaloKm = intervaloKm;
         this.intervaloMeses = intevaloMeses;
         this.dataUltimaRevisao = Calendar.getInstance();
         this.kmUltimaRevisao = 0;
-        this.observacao = "";
+        this.descricao = "";
     }
 
     /**
@@ -87,8 +88,8 @@ public class Revisao {
         return kmUltimaRevisao;
     }
 
-    public String getObservacao() {
-        return observacao;
+    public String getDescricao() {
+        return descricao;
     }
 
     public void setIntervaloKm(int intervaloKm) {
@@ -99,7 +100,18 @@ public class Revisao {
         this.intervaloMeses = intervaloMeses;
     }
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+
+        str += "Descrição: " + this.descricao;
+        str += "\nIntervalo em Km: " + this.intervaloKm;
+        str += "\nIntervalo em em meses: " + this.intervaloMeses;
+
+        return str;
     }
 }

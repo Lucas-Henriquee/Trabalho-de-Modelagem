@@ -1,9 +1,10 @@
 package Obj;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Veiculo {
+public class Veiculo implements Serializable {
 
     private String   placa;
     private String   modelo;
@@ -123,5 +124,24 @@ public class Veiculo {
 
     public Calendar getUltimaAtualizacao() {
         return ultimaAtualizacao;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+
+        str += "Modelo: " + this.modelo;
+        str += "\nPlaca: " + this.placa;
+        str += "\nAno de Fabricação: " + this.anoFab;
+        str += "\nAno do modelo: " + this.anoModelo;
+        str += "\nTipo de combustivel: " + this.tipoCombustivel;
+        str += "\n ------ Revisões ------ \n";
+
+        for(int i = 0; i < this.revisoes.size(); i++){
+            str += this.revisoes.get(i).toString();
+            str += "\n------------------";
+        }
+
+        return str;
     }
 }

@@ -1,10 +1,11 @@
 package Obj;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Servico {
+public class Servico implements Serializable {
     Calendar data;
     int      quilometragem;
     float    valor;
