@@ -1,4 +1,6 @@
 *.class
 *.jar
 *.properties
+*.vscode
 target/
+files/
