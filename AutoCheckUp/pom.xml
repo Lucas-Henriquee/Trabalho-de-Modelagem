@@ -63,6 +63,16 @@ phase -->
 		</dependencies>
 	</dependencyManagement>
     <dependencies>
+    <dependency>
+        <groupId>org.apache.pdfbox</groupId>
+        <artifactId>pdfbox</artifactId>
+        <version>3.0.0</version> <!-- Verifique a versão mais recente no site do Apache PDFBox -->
+    </dependency>
+    <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>mail</artifactId>
+        <version>1.5.0-b01</version>
+    </dependency>
         <dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
