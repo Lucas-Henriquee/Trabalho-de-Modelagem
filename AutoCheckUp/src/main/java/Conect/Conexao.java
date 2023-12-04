@@ -3,7 +3,7 @@ package Conect;
 import java.sql.*;
 public class Conexao {
 
-    public Connection getConnection(){
+    public static Connection getConnection(){
         try {
             String dbName = "autocheckup";
             String userName = "postgres";

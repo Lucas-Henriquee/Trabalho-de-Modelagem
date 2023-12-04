@@ -6,8 +6,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 
+import Conect.Criptografia;
+
 public class Cliente implements Serializable {
     
+    private String email;
+    private String senha;
     private String nome;
     private int diasIntervaloNotificacao;
     private LocalDate ultimaAtualizacao;
@@ -15,6 +19,17 @@ public class Cliente implements Serializable {
     private List<Veiculo> veiculos;
 
     public Cliente(String nome){
+        email = null;
+        senha = null;
+        this.nome = nome;
+        this.veiculos = new LinkedList<Veiculo>();
+        this.ultimaAtualizacao = LocalDate.now();
+        this.diasIntervaloNotificacao = 3; 
+    }
+
+    public Cliente(String nome, String email, String senha){
+        this.email = email;
+        this.senha = Criptografia.senha(senha);
         this.nome = nome;
         this.veiculos = new LinkedList<Veiculo>();
         this.ultimaAtualizacao = LocalDate.now();
@@ -43,8 +58,18 @@ public class Cliente implements Serializable {
 
     //gets e sets
 
+    
+
     public String getNome() {
         return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSenha() {
+        return senha;
     }
 
     public int getDiasIntervaloNotificacao() {

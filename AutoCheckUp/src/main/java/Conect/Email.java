@@ -7,7 +7,7 @@ import javax.mail.internet.*;
 
 public class Email {
 
-    public static void envia() throws RuntimeException {
+    public static void envia(String nome, String email) throws RuntimeException {
 
         final String username = "no.reply.autocheckup@hotmail.com"; // Seu endereço de e-mail
         final String password = "Te$tE#23*"; // Sua senha
@@ -30,16 +30,15 @@ public class Email {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username)); // E-mail remetente
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("lucashn003@hotmail.com")); // E-mail
-                                                                                                              // destinatário
-            message.setSubject("Chave de confirmação");
-
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); // E-mail destinatário
+            message.setSubject("Código de verificação");
+            
             // Criar o corpo do e-mail em HTML
             String htmlBody = "<img src=\"cid:imagem\" height=\"120px\" width=\"120px\"> <p></p>"
-                    + "<div> Olá, " + "Lucas" + "</div>"
-                    + "<p>Aqui está sua chave para validação do email: </p>"
-                    + "<p>" + new Criptografia().generate("lucashn003@hotmail.com") + "</p>"
-                    + "<p>Atenciosamente, <br> AutoCheck</p>";
+                            + "<div> Olá, "+ nome +"</div>"
+                            + "<p>Aqui está seu código de verificação do email: </p>"
+                            + "<p>"+ Criptografia.generate(email) + "</p>"
+                            + "<p>Atenciosamente, <br> AutoCheck</p>";
 
             MimeBodyPart htmlPart = new MimeBodyPart();
             htmlPart.setContent(htmlBody, "text/html; charset=utf-8");
