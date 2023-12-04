@@ -1,7 +1,6 @@
 package View;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -26,7 +25,7 @@ public class TelaFundo {
           jpFundo.setBackground(new Color(0, 0, 0, 0));
           jp1.setBackground(new Color(0, 0, 0, 0));
 
-          jlImagemFundo = new JLabel(new ImageIcon("src/main/java/Images/telaPrincipal.png"));
+          jlImagemFundo = new JLabel(new ImageIcon("src/main/java/Images/tela_principal.png"));
 
           jpFundo.add(jlImagemFundo);
           jpFundo.add(jp1);

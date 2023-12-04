@@ -9,7 +9,7 @@ import Obj.Veiculo;
 
 public class StreamTest {
 
-    private final String PATH = "./files/testStream.sav";
+    private final String PATH = "src/main/java/files/testStream.sav";
     private final String PLACA = "ABC-1234";
 
 

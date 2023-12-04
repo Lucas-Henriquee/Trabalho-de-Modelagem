@@ -1,10 +1,9 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
+import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.*;
 
 public class TelaMenu implements MouseListener {
 
@@ -13,9 +12,12 @@ public class TelaMenu implements MouseListener {
      private JPanel jpPanel2;
      private JPanel jpPanel3;
      private JPanel jpPanel4;
-     private JPanel jpPanel5;
 
      private JLabel jlAcoes;
+     private JLabel jlMenu;
+
+     private JMenuItem jmItemSair;
+     private JMenuItem jmItemLogoff;
 
      public TelaMenu() {
 
@@ -37,8 +39,6 @@ public class TelaMenu implements MouseListener {
 
           painel4();
 
-          painel5();
-
           layout.gridy = 0;
           jpPlano.add(jpPanel1, layout);
 
@@ -51,9 +51,6 @@ public class TelaMenu implements MouseListener {
           layout.gridy = 3;
           jpPlano.add(jpPanel4, layout);
 
-          layout.gridy = 4;
-          jpPlano.add(jpPanel5, layout);
-
           new TelaFundo(jpPlano);
 
      }
@@ -64,19 +61,52 @@ public class TelaMenu implements MouseListener {
           jpPanel1.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(90, 40, 0, 190);
+          layout.insets = new Insets(73, 30, 0, 155);
 
-          JLabel jlUsuario = new JLabel(new ImageIcon("src/main/java/Images/usuario.png"));
-          jlUsuario.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-          JLabel jlMenu = new JLabel(new ImageIcon("src/main/java/Images/menu.png"));
+          jlMenu = new JLabel(new ImageIcon("src/main/java/Images/menu.png"));
           jlMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlMenu.addMouseListener(this);
 
-          layout.gridx = 1;
-          jpPanel1.add(jlUsuario, layout);
+          JMenuBar jmbUsuario = new JMenuBar();
+          JMenu jmUsuario = new JMenu();
+
+          jmUsuario.setIcon(new ImageIcon("src/main/java/Images/usuario.png"));
+          jmbUsuario.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jmbUsuario.setBackground(Color.white);
+
+          jmItemLogoff = new JMenuItem();
+          jmItemLogoff.setText("LogOff");
+          jmItemLogoff.setBackground(Color.white);
+          jmItemLogoff.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jmItemLogoff.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                    new TelaLogin();
+               }
+          });
+
+          jmItemSair = new JMenuItem();
+          jmItemSair.setText("Sair");
+          jmItemSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jmItemSair.setBackground(Color.white);
+          jmItemSair.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                    Tela.visor.dispose();
+                    Runtime.getRuntime().exit(0);
+               }
+          });
+
+          jmUsuario.add(jmItemLogoff);
+          jmUsuario.add(jmItemSair);
+
+          jmbUsuario.add(jmUsuario);
 
           layout.gridx = 0;
           jpPanel1.add(jlMenu, layout);
+
+          layout.gridx = 1;
+          jpPanel1.add(jmbUsuario, layout);
 
      }
 
@@ -86,15 +116,15 @@ public class TelaMenu implements MouseListener {
           jpPanel2.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(100, 0, 20, 0);
+          layout.insets = new Insets(40, 30, 0, 0);
 
-          JLabel jlAuto = new JLabel("     Auto CheckUp");
+          JLabel jlAuto = new JLabel(" Auto CheckUp");
           jlAuto.setForeground(Color.black);
-          jlAuto.setFont(new Font("Arial", 1, 42));
+          jlAuto.setFont(new Font("Arial", 1, 34));
 
-          JLabel jlMCarros = new JLabel("                Meus Carros");
+          JLabel jlMCarros = new JLabel("           Meus Carros");
           jlMCarros.setForeground(Color.black);
-          jlMCarros.setFont(new Font("Arial", 0, 28));
+          jlMCarros.setFont(new Font("Arial", 0, 23));
 
           layout.gridy = 0;
           layout.gridx = 0;
@@ -112,12 +142,57 @@ public class TelaMenu implements MouseListener {
           jpPanel3.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(0, 48, 0, 0);
+          layout.insets = new Insets(15, 33, 0, 0);
 
-          JLabel jlCarro = new JLabel(new ImageIcon("src/main/java/Images/carro.png"));
+          // ArrayList<Object[]> dados =
+
+          DefaultTableModel tableModel = new DefaultTableModel(1, 0) {
+               @Override
+               public boolean isCellEditable(int row, int column) {
+                    return false;
+               }
+          };
+
+          JTable tabela = new JTable(tableModel);
+          Font fonte = tabela.getFont().deriveFont(15f);
+          tabela.setFont(fonte);
+          tabela.setRowHeight(tabela.getRowHeight() + 10 + 10);
+
+          JTableHeader cabecalho = tabela.getTableHeader();
+          cabecalho.setFont(new Font("Arial", 1, 11));
+
+          DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+          cellRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+          tabela.setDefaultRenderer(Object.class, cellRenderer);
+
+          JScrollPane scrollPane = new JScrollPane(tabela);
+          scrollPane.setPreferredSize(new java.awt.Dimension(277, 244));
+
+          /*
+           * if (dados != null) {
+           * for (Object[] linha : dados) {
+           * tableModel.addRow(linha);
+           * }
+           * }
+           * 
+           */
+
+          JLabel jlCarros = new JLabel("               Nenhum carro cadastrado");
+          jlCarros.setForeground(Color.black);
+          jlCarros.setFont(new Font("Arial", 0, 14));
+          /*
+           * if(quantidadeCarros!= 0)
+           * jlCarros.setText(quantidadeCarros+" carros cadastrados");
+           * else
+           * jlCarros.setText("Nenhum carro cadastrados");
+           * }
+           */
 
           layout.gridy = 0;
-          jpPanel3.add(jlCarro, layout);
+          jpPanel3.add(scrollPane, layout);
+
+          layout.gridy = 1;
+          jpPanel3.add(jlCarros, layout);
 
      }
 
@@ -127,31 +202,14 @@ public class TelaMenu implements MouseListener {
           jpPanel4.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(20, 125, 0, 0);
-
-          JLabel jlCarro = new JLabel("Nenhum carro cadastrado");
-          jlCarro.setForeground(Color.black);
-          jlCarro.setFont(new Font("Arial", 0, 14));
-
-          layout.gridy = 0;
-          jpPanel4.add(jlCarro, layout);
-
-     }
-
-     private void painel5() {
-
-          jpPanel5 = new JPanel(new GridBagLayout());
-          jpPanel5.setBackground(new Color(0, 0, 0, 0));
-          GridBagConstraints layout = new GridBagConstraints();
-          layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(30, 132, 0, 0);
+          layout.insets = new Insets(30, 111, 0, 0);
 
           jlAcoes = new JLabel(new ImageIcon("src/main/java/Images/botaoAcoes.png"));
           jlAcoes.setCursor(new Cursor(Cursor.HAND_CURSOR));
           jlAcoes.addMouseListener(this);
 
           layout.gridy = 0;
-          jpPanel5.add(jlAcoes, layout);
+          jpPanel4.add(jlAcoes, layout);
 
      }
 
@@ -178,7 +236,7 @@ public class TelaMenu implements MouseListener {
 
      @Override
      public void mouseEntered(MouseEvent e) {
-          if (e.getSource() == jlAcoes) {
+          if (e.getSource() == jlMenu) {
                // faz nada
           }
      }

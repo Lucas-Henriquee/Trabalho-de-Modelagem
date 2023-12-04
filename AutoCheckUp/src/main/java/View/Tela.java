@@ -7,7 +7,7 @@ public class Tela {
 
      public static JFrame visor;
 
-     public static final int HEIGHT = 860;
+     public static final int HEIGHT = 700;
      public static final int WIDTH = 420;
 
      public Tela() {
@@ -23,6 +23,8 @@ public class Tela {
           visor.setUndecorated(true);
           visor.setOpacity(0.5f);
           visor.setBackground(new Color(0, 0, 0, 0));
+
           new TelaEntrada();
+
      }
 }

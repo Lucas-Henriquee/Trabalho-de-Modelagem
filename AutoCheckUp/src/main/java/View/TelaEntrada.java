@@ -20,25 +20,18 @@ public class TelaEntrada {
           SpringLayout layout = new SpringLayout();
 
           jpFundo = new JPanel(layout);
-          jpPlano = new JPanel();
+          jpPlano = new JPanel(new FlowLayout(FlowLayout.LEFT, 40, 210));
 
           jpFundo.setPreferredSize(new Dimension(Tela.WIDTH, Tela.HEIGHT));
+          jpPlano.setPreferredSize(new Dimension(Tela.WIDTH, Tela.HEIGHT));
 
           jpPlano.setBackground(new Color(0, 0, 0, 0));
           jpFundo.setBackground(new Color(0, 0, 0, 0));
 
-          jlImagemFundo = new JLabel(new ImageIcon("src/main/java/Images/telaEntrada.png"));
+          jlImagemFundo = new JLabel(new ImageIcon("src/main/java/Images/tela_entrada.png"));
           jlImagemLogotipo = new JLabel(new ImageIcon("src/main/java/Images/Logotipo.png"));
 
-          Spring x = layout.getConstraint(SpringLayout.WIDTH, jpFundo);
-          Spring y = layout.getConstraint(SpringLayout.HEIGHT, jpFundo);
-          SpringLayout.Constraints constraints = layout.getConstraints(jpPlano);
-          constraints.setX(Spring.sum(Spring.constant(0),
-                    Spring.sum(Spring.scale(x, 0.5f), Spring.scale(Spring.width(jpPlano), -0.5f))));
-          constraints.setY(Spring.sum(Spring.constant(0),
-                    Spring.sum(Spring.scale(y, 0.5f), Spring.scale(Spring.height(jpPlano), -0.5f))));
-
-          jpPlano.add(jlImagemLogotipo);
+          jpPlano.add(jlImagemLogotipo, 0);
           jpFundo.add(jlImagemFundo);
           jpFundo.add(jpPlano);
           jpFundo.setComponentZOrder(jpPlano, 0);
@@ -53,8 +46,8 @@ public class TelaEntrada {
                Thread.currentThread().interrupt();
           }
 
-          // new TelaLogin();
-          new TelaMenu();
+          new TelaLogin();
+          // new TelaMenu();
 
      }
 

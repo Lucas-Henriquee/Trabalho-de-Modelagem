@@ -30,15 +30,16 @@ public class Email {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username)); // E-mail remetente
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("kauapsilveira@gmail.com")); // E-mail destinatário
-            message.setSubject("Assunto do e-mail");
-            
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("lucashn003@hotmail.com")); // E-mail
+                                                                                                              // destinatário
+            message.setSubject("Chave de confirmação");
+
             // Criar o corpo do e-mail em HTML
             String htmlBody = "<img src=\"cid:imagem\" height=\"120px\" width=\"120px\"> <p></p>"
-                            + "<div> Olá, "+ "Kauã" +"</div>"
-                            + "<p>Aqui está sua chave para validação do email: </p>"
-                            + "<p>"+ new Criptografia().generate("kauapsilveira@gmail.com") + "</p>"
-                            + "<p>Atenciosamente, <br> AutoCheck</p>";
+                    + "<div> Olá, " + "Lucas" + "</div>"
+                    + "<p>Aqui está sua chave para validação do email: </p>"
+                    + "<p>" + new Criptografia().generate("lucashn003@hotmail.com") + "</p>"
+                    + "<p>Atenciosamente, <br> AutoCheck</p>";
 
             MimeBodyPart htmlPart = new MimeBodyPart();
             htmlPart.setContent(htmlBody, "text/html; charset=utf-8");
@@ -52,16 +53,15 @@ public class Email {
             MimeMultipart multipart = new MimeMultipart();
             multipart.addBodyPart(htmlPart);
             multipart.addBodyPart(imagemPart);
-            
 
             message.setContent(multipart);
-            //message.setText("Testando 123");
+            // message.setText("Testando 123");
             // Enviar e-mail
             Transport.send(message);
 
             System.out.println("E-mail com imagem enviado com sucesso!");
 
-        }catch (MessagingException | IOException e) {
+        } catch (MessagingException | IOException e) {
             throw new RuntimeException(e);
         }
     }
