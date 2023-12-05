@@ -47,7 +47,6 @@ public class TelaEntrada {
           }
 
           new TelaLogin();
-          // new TelaMenu();
 
      }
 

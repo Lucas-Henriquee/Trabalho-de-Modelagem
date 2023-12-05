@@ -235,19 +235,6 @@ public class TelaCadastroUsuario implements MouseListener {
                }
           });
 
-          /*
-           * SpringLayout layoutSenha = new SpringLayout();
-           * 
-           * JPanel jpSenha = new JPanel(layoutSenha);
-           * 
-           * jlImagemSenha1 = new JLabel(new
-           * ImageIcon("src/main/java/Images/olho-senha-fechado.png"));
-           * 
-           * jpSenha.add(jtfSenha1);
-           * jpSenha.add(jlImagemSenha1);
-           * jpSenha.setComponentZOrder(jlImagemSenha1, 0);
-           */
-
           JLabel jlEspaco4 = new JLabel("aaaaaaaaaaaaaaaaaaa");
           jlEspaco4.setForeground(new Color(0, 0, 0, 0));
           jlEspaco4.setFont(new Font("Arial", 0, 2));

@@ -5,10 +5,11 @@ import java.awt.event.*;
 import java.text.ParseException;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 
-public class TelaCadastroCarro implements MouseListener {
+public class TelaAtualizarVeiculo implements MouseListener {
 
      private JPanel jpPlano;
      private JPanel jpPanel1;
@@ -20,14 +21,16 @@ public class TelaCadastroCarro implements MouseListener {
      private JPanel jpPanel7;
      private JPanel jpPanel8;
      private JPanel jpPanel9;
+     private JPanel jpPanel10;
 
      private JLabel jlVoltar;
-     private JLabel jlCadastrarCarro;
+     private JLabel jlAtualizarKm;
+     private JLabel jlAtualizarPlaca;
+     private JLabel jlCriarCadastrar;
 
-     public TelaCadastroCarro() {
+     public TelaAtualizarVeiculo() {
 
           inicializa();
-
      }
 
      private void inicializa() {
@@ -54,6 +57,8 @@ public class TelaCadastroCarro implements MouseListener {
           painel8();
 
           painel9();
+
+          painel10();
 
           layout.gridy = 0;
           jpPlano.add(jpPanel1, layout);
@@ -82,6 +87,9 @@ public class TelaCadastroCarro implements MouseListener {
           layout.gridy = 8;
           jpPlano.add(jpPanel9, layout);
 
+          layout.gridy = 9;
+          jpPlano.add(jpPanel10, layout);
+
           new TelaFundo(jpPlano);
 
      }
@@ -109,21 +117,35 @@ public class TelaCadastroCarro implements MouseListener {
           jpPanel2.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(10, 30, 0, 180);
+          layout.insets = new Insets(8, 30, 0, 180);
 
-          JLabel jlLogin = new JLabel("Cadastro do veículo");
+          JLabel jlLogin = new JLabel("Atualizar veículo");
           jlLogin.setForeground(Color.black);
           jlLogin.setFont(new Font("Arial", 0, 20));
 
-          JLabel jlEntre = new JLabel(" Entre com seus dados do seu veículo");
+          JLabel jlEntre = new JLabel("Atualize as informações do seu veículo");
           jlEntre.setForeground(Color.black);
           jlEntre.setFont(new Font("Arial", 1, 11));
+
+          JLabel jlEspaco = new JLabel("aaaaaaaa");
+          jlEspaco.setForeground(Color.white);
+          jlEspaco.setFont(new Font("Arial", 1, 8));
+
+          JLabel jlKm = new JLabel("Km atual");
+          jlKm.setForeground(Color.black);
+          jlKm.setFont(new Font("Arial", 1, 11));
 
           layout.gridy = 0;
           jpPanel2.add(jlLogin, layout);
 
           layout.gridy = 1;
           jpPanel2.add(jlEntre, layout);
+
+          layout.gridy = 2;
+          jpPanel2.add(jlEspaco, layout);
+
+          layout.gridy = 3;
+          jpPanel2.add(jlKm, layout);
 
      }
 
@@ -133,157 +155,16 @@ public class TelaCadastroCarro implements MouseListener {
           jpPanel3.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(8, 30, 0, 0);
+          layout.insets = new Insets(4, 30, 0, 0);
 
-          JLabel jlEspaco = new JLabel("aaaaaaaaaaaaaaaaaaa");
-          jlEspaco.setForeground(new Color(0, 0, 0, 0));
-          jlEspaco.setFont(new Font("Arial", 0, 20));
-
-          JLabel jlNome = new JLabel("Digite o nome*");
-          jlNome.setForeground(Color.black);
-          jlNome.setFont(new Font("Arial", 1, 11));
-
-          JTextField jtfNome = new JTextField("Nome do veículo");
-          jtfNome.setForeground(Color.GRAY);
-          jtfNome.setFont(new Font("Arial", 0, 15));
-          jtfNome.setPreferredSize(new Dimension(277, 33));
-          jtfNome.addFocusListener(new FocusListener() {
-               @Override
-               public void focusGained(FocusEvent e) {
-                    if (jtfNome.getText().equals("Nome do veículo")) {
-                         jtfNome.setText("");
-                         jtfNome.setForeground(Color.GRAY);
-                    }
-               }
-
-               @Override
-               public void focusLost(java.awt.event.FocusEvent e) {
-                    if (jtfNome.getText().isEmpty()) {
-                         jtfNome.setText("Nome do veículo");
-                         jtfNome.setForeground(Color.GRAY);
-                    }
-               }
-          });
-          jtfNome.getDocument().addDocumentListener(new DocumentListener() {
-               @Override
-               public void insertUpdate(DocumentEvent e) {
-                    checkText();
-               }
-
-               @Override
-               public void removeUpdate(DocumentEvent e) {
-                    checkText();
-               }
-
-               @Override
-               public void changedUpdate(DocumentEvent e) {
-                    checkText();
-               }
-
-               private void checkText() {
-                    if (jtfNome.getText().isEmpty()) {
-                         jtfNome.setForeground(Color.GRAY);
-                    } else {
-                         jtfNome.setForeground(Color.BLACK);
-                    }
-               }
-          });
-
-          layout.gridy = 0;
-          jpPanel3.add(jlEspaco, layout);
-
-          layout.gridy = 1;
-          jpPanel3.add(jlNome, layout);
-
-          layout.gridy = 2;
-          jpPanel3.add(jtfNome, layout);
-     }
-
-     private void painel4() {
-
-          jpPanel4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 27, 8));
-          jpPanel4.setBackground(new Color(0, 0, 0, 0));
-
-          JLabel jlDAno = new JLabel(" Digite o ano*");
-          jlDAno.setForeground(Color.black);
-          jlDAno.setFont(new Font("Arial", 1, 11));
-
-          JLabel jlDEspaco = new JLabel("");
-          jlDEspaco.setForeground(Color.white);
-          jlDEspaco.setFont(new Font("Arial", 0, 11));
-
-          JLabel jlDKm = new JLabel("           Km atual*");
-          jlDKm.setForeground(Color.black);
-          jlDKm.setFont(new Font("Arial", 1, 11));
-
-          jpPanel4.add(jlDAno, 0);
-          jpPanel4.add(jlDEspaco, 1);
-          jpPanel4.add(jlDKm, 2);
-
-     }
-
-     private void painel5() {
-
-          jpPanel5 = new JPanel(new GridBagLayout());
-          jpPanel5.setBackground(new Color(0, 0, 0, 0));
-          GridBagConstraints layout = new GridBagConstraints();
-          layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(0, 30, 8, 0);
-
-          JTextField jtfAno = new JTextField("Ano do veículo");
-          jtfAno.setForeground(Color.GRAY);
-          jtfAno.setFont(new Font("Arial", 0, 15));
-          jtfAno.setPreferredSize(new Dimension(120, 32));
-          jtfAno.addFocusListener(new FocusListener() {
-               @Override
-               public void focusGained(FocusEvent e) {
-                    if (jtfAno.getText().equals("Ano do veículo")) {
-                         jtfAno.setText("");
-                         jtfAno.setForeground(Color.GRAY);
-                    }
-               }
-
-               @Override
-               public void focusLost(java.awt.event.FocusEvent e) {
-                    if (jtfAno.getText().isEmpty()) {
-                         jtfAno.setText("Ano do veículo");
-                         jtfAno.setForeground(Color.GRAY);
-                    }
-               }
-          });
-          jtfAno.getDocument().addDocumentListener(new DocumentListener() {
-               @Override
-               public void insertUpdate(DocumentEvent e) {
-                    checkText();
-               }
-
-               @Override
-               public void removeUpdate(DocumentEvent e) {
-                    checkText();
-               }
-
-               @Override
-               public void changedUpdate(DocumentEvent e) {
-                    checkText();
-               }
-
-               private void checkText() {
-                    if (jtfAno.getText().isEmpty()) {
-                         jtfAno.setForeground(Color.GRAY);
-                    } else {
-                         jtfAno.setForeground(Color.BLACK);
-                    }
-               }
-          });
-
-          JTextField jtfKm = new JTextField("Km atual");
+          JTextField jtfKm = new JTextField("Novo Km");
           jtfKm.setForeground(Color.GRAY);
           jtfKm.setFont(new Font("Arial", 0, 15));
-          jtfKm.setPreferredSize(new Dimension(125, 32));
+          jtfKm.setPreferredSize(new Dimension(155, 32));
           jtfKm.addFocusListener(new FocusListener() {
                @Override
                public void focusGained(FocusEvent e) {
-                    if (jtfKm.getText().equals("Km atual")) {
+                    if (jtfKm.getText().equals("Novo Km")) {
                          jtfKm.setText("");
                          jtfKm.setForeground(Color.GRAY);
                     }
@@ -292,7 +173,7 @@ public class TelaCadastroCarro implements MouseListener {
                @Override
                public void focusLost(java.awt.event.FocusEvent e) {
                     if (jtfKm.getText().isEmpty()) {
-                         jtfKm.setText("Km atual");
+                         jtfKm.setText("Novo Km");
                          jtfKm.setForeground(Color.GRAY);
                     }
                }
@@ -322,29 +203,121 @@ public class TelaCadastroCarro implements MouseListener {
                }
           });
 
+          jlAtualizarKm = new JLabel(new ImageIcon("src/main/java/Images/botao-atualizar.png"));
+          jlAtualizarKm.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlAtualizarKm.addMouseListener(this);
+
           layout.gridx = 0;
-          jpPanel5.add(jtfAno, layout);
+          jpPanel3.add(jtfKm, layout);
 
           layout.gridx = 1;
-          jpPanel5.add(jtfKm, layout);
+          jpPanel3.add(jlAtualizarKm, layout);
 
+     }
+
+     private void painel4() {
+
+          jpPanel4 = new JPanel(new GridBagLayout());
+          jpPanel4.setBackground(new Color(0, 0, 0, 0));
+          GridBagConstraints layout = new GridBagConstraints();
+          layout.anchor = GridBagConstraints.WEST;
+          layout.insets = new Insets(5, 30, 0, 0);
+
+          JLabel jlPlaca = new JLabel("Placa atual");
+          jlPlaca.setForeground(Color.black);
+          jlPlaca.setFont(new Font("Arial", 1, 11));
+
+          layout.gridy = 0;
+          jpPanel4.add(jlPlaca, layout);
+
+     }
+
+     private void painel5() {
+
+          jpPanel5 = new JPanel(new GridBagLayout());
+          jpPanel5.setBackground(new Color(0, 0, 0, 0));
+          GridBagConstraints layout = new GridBagConstraints();
+          layout.anchor = GridBagConstraints.WEST;
+          layout.insets = new Insets(4, 30, 0, 0);
+
+          JTextField jtfPlaca = new JTextField("Nova placa");
+          jtfPlaca.setForeground(Color.GRAY);
+          jtfPlaca.setFont(new Font("Arial", 0, 15));
+          jtfPlaca.setPreferredSize(new Dimension(155, 32));
+          jtfPlaca.addFocusListener(new FocusListener() {
+               @Override
+               public void focusGained(FocusEvent e) {
+                    if (jtfPlaca.getText().equals("Nova placa")) {
+                         jtfPlaca.setText("");
+                         jtfPlaca.setForeground(Color.GRAY);
+                    }
+               }
+
+               @Override
+               public void focusLost(java.awt.event.FocusEvent e) {
+                    if (jtfPlaca.getText().isEmpty()) {
+                         jtfPlaca.setText("Nova placa");
+                         jtfPlaca.setForeground(Color.GRAY);
+                    }
+               }
+          });
+          jtfPlaca.getDocument().addDocumentListener(new DocumentListener() {
+               @Override
+               public void insertUpdate(DocumentEvent e) {
+                    checkText();
+               }
+
+               @Override
+               public void removeUpdate(DocumentEvent e) {
+                    checkText();
+               }
+
+               @Override
+               public void changedUpdate(DocumentEvent e) {
+                    checkText();
+               }
+
+               private void checkText() {
+                    if (jtfPlaca.getText().isEmpty()) {
+                         jtfPlaca.setForeground(Color.GRAY);
+                    } else {
+                         jtfPlaca.setForeground(Color.BLACK);
+                    }
+               }
+          });
+
+          jlAtualizarPlaca = new JLabel(new ImageIcon("src/main/java/Images/botao-atualizar.png"));
+          jlAtualizarPlaca.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlAtualizarPlaca.addMouseListener(this);
+
+          layout.gridx = 0;
+          jpPanel5.add(jtfPlaca, layout);
+
+          layout.gridx = 1;
+          jpPanel5.add(jlAtualizarPlaca, layout);
      }
 
      private void painel6() {
 
-          jpPanel6 = new JPanel(new FlowLayout(FlowLayout.CENTER, 18, 8));
+          jpPanel6 = new JPanel(new GridBagLayout());
           jpPanel6.setBackground(new Color(0, 0, 0, 0));
+          GridBagConstraints layout = new GridBagConstraints();
+          layout.anchor = GridBagConstraints.WEST;
+          layout.insets = new Insets(13, 30, 2, 0);
 
-          JLabel jlDM = new JLabel("   Última manutenção");
-          jlDM.setForeground(Color.black);
-          jlDM.setFont(new Font("Arial", 1, 11));
+          JLabel jlRevisao = new JLabel("  Crie/Cadastre uma nova revisão");
+          jlRevisao.setForeground(Color.black);
+          jlRevisao.setFont(new Font("Arial", 1, 14));
 
-          JLabel jlDP = new JLabel("       Digite a placa*");
-          jlDP.setForeground(Color.black);
-          jlDP.setFont(new Font("Arial", 1, 11));
+          JLabel jlTipo = new JLabel("Tipo de manutenção*");
+          jlTipo.setForeground(Color.black);
+          jlTipo.setFont(new Font("Arial", 1, 11));
 
-          jpPanel6.add(jlDM, 0);
-          jpPanel6.add(jlDP, 1);
+          layout.gridy = 0;
+          jpPanel6.add(jlRevisao, layout);
+
+          layout.gridy = 1;
+          jpPanel6.add(jlTipo, layout);
 
      }
 
@@ -352,6 +325,87 @@ public class TelaCadastroCarro implements MouseListener {
 
           jpPanel7 = new JPanel(new GridBagLayout());
           jpPanel7.setBackground(new Color(0, 0, 0, 0));
+          GridBagConstraints layout = new GridBagConstraints();
+          layout.anchor = GridBagConstraints.WEST;
+          layout.insets = new Insets(4, 30, 0, 0);
+
+          JTextField jtfTipo = new JTextField("Nome do veículo");
+          jtfTipo.setForeground(Color.GRAY);
+          jtfTipo.setFont(new Font("Arial", 0, 15));
+          jtfTipo.setPreferredSize(new Dimension(277, 33));
+          jtfTipo.addFocusListener(new FocusListener() {
+               @Override
+               public void focusGained(FocusEvent e) {
+                    if (jtfTipo.getText().equals("Nome do veículo")) {
+                         jtfTipo.setText("");
+                         jtfTipo.setForeground(Color.GRAY);
+                    }
+               }
+
+               @Override
+               public void focusLost(java.awt.event.FocusEvent e) {
+                    if (jtfTipo.getText().isEmpty()) {
+                         jtfTipo.setText("Nome do veículo");
+                         jtfTipo.setForeground(Color.GRAY);
+                    }
+               }
+          });
+          jtfTipo.getDocument().addDocumentListener(new DocumentListener() {
+               @Override
+               public void insertUpdate(DocumentEvent e) {
+                    checkText();
+               }
+
+               @Override
+               public void removeUpdate(DocumentEvent e) {
+                    checkText();
+               }
+
+               @Override
+               public void changedUpdate(DocumentEvent e) {
+                    checkText();
+               }
+
+               private void checkText() {
+                    if (jtfTipo.getText().isEmpty()) {
+                         jtfTipo.setForeground(Color.GRAY);
+                    } else {
+                         jtfTipo.setForeground(Color.BLACK);
+                    }
+               }
+          });
+
+          layout.gridy = 0;
+          jpPanel7.add(jtfTipo, layout);
+
+     }
+
+     private void painel8() {
+
+          jpPanel8 = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 7));
+          jpPanel8.setBackground(new Color(0, 0, 0, 0));
+
+          JLabel jlAno = new JLabel("       Data em que foi feita*");
+          jlAno.setForeground(Color.black);
+          jlAno.setFont(new Font("Arial", 1, 11));
+
+          JLabel jlDEspaco = new JLabel("");
+          jlDEspaco.setForeground(Color.white);
+          jlDEspaco.setFont(new Font("Arial", 0, 11));
+
+          JLabel jlDKm = new JLabel("Km em que foi feita*");
+          jlDKm.setForeground(Color.black);
+          jlDKm.setFont(new Font("Arial", 1, 11));
+
+          jpPanel8.add(jlAno, 0);
+          jpPanel8.add(jlDEspaco, 1);
+          jpPanel8.add(jlDKm, 2);
+     }
+
+     private void painel9() {
+
+          jpPanel9 = new JPanel(new GridBagLayout());
+          jpPanel9.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(0, 30, 8, 0);
@@ -414,28 +468,28 @@ public class TelaCadastroCarro implements MouseListener {
                }
           });
 
-          JTextField jtfP = new JTextField("Placa");
-          jtfP.setForeground(Color.GRAY);
-          jtfP.setFont(new Font("Arial", 0, 15));
-          jtfP.setPreferredSize(new Dimension(125, 32));
-          jtfP.addFocusListener(new FocusListener() {
+          JTextField jtfKm = new JTextField("Km");
+          jtfKm.setForeground(Color.GRAY);
+          jtfKm.setFont(new Font("Arial", 0, 15));
+          jtfKm.setPreferredSize(new Dimension(125, 32));
+          jtfKm.addFocusListener(new FocusListener() {
                @Override
                public void focusGained(FocusEvent e) {
-                    if (jtfP.getText().equals("Placa")) {
-                         jtfP.setText("");
-                         jtfP.setForeground(Color.GRAY);
+                    if (jtfKm.getText().equals("Km")) {
+                         jtfKm.setText("");
+                         jtfKm.setForeground(Color.GRAY);
                     }
                }
 
                @Override
                public void focusLost(java.awt.event.FocusEvent e) {
-                    if (jtfP.getText().isEmpty()) {
-                         jtfP.setText("Placa");
-                         jtfP.setForeground(Color.GRAY);
+                    if (jtfKm.getText().isEmpty()) {
+                         jtfKm.setText("Km");
+                         jtfKm.setForeground(Color.GRAY);
                     }
                }
           });
-          jtfP.getDocument().addDocumentListener(new DocumentListener() {
+          jtfKm.getDocument().addDocumentListener(new DocumentListener() {
                @Override
                public void insertUpdate(DocumentEvent e) {
                     checkText();
@@ -452,29 +506,28 @@ public class TelaCadastroCarro implements MouseListener {
                }
 
                private void checkText() {
-                    if (jtfP.getText().isEmpty()) {
-                         jtfP.setForeground(Color.GRAY);
+                    if (jtfKm.getText().isEmpty()) {
+                         jtfKm.setForeground(Color.GRAY);
                     } else {
-                         jtfP.setForeground(Color.BLACK);
+                         jtfKm.setForeground(Color.BLACK);
                     }
                }
           });
 
           layout.gridx = 0;
-          jpPanel7.add(jFormattedTextData, layout);
+          jpPanel9.add(jFormattedTextData, layout);
 
           layout.gridx = 1;
-          jpPanel7.add(jtfP, layout);
-
+          jpPanel9.add(jtfKm, layout);
      }
 
-     private void painel8() {
+     private void painel10() {
 
-          jpPanel8 = new JPanel(new GridBagLayout());
-          jpPanel8.setBackground(new Color(0, 0, 0, 0));
+          jpPanel10 = new JPanel(new GridBagLayout());
+          jpPanel10.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(8, 30, 0, 0);
+          layout.insets = new Insets(0, 30, 7, 0);
 
           JLabel jlOBS = new JLabel("Digite uma observação");
           jlOBS.setForeground(Color.black);
@@ -484,7 +537,7 @@ public class TelaCadastroCarro implements MouseListener {
           jtaOBS.setForeground(Color.GRAY);
           jtaOBS.setBorder(BorderFactory.createLineBorder(Color.GRAY));
           jtaOBS.setFont(new Font("Arial", 0, 15));
-          jtaOBS.setPreferredSize(new Dimension(277, 122));
+          jtaOBS.setPreferredSize(new Dimension(277, 115));
           jtaOBS.addFocusListener(new FocusListener() {
                @Override
                public void focusGained(FocusEvent e) {
@@ -532,45 +585,45 @@ public class TelaCadastroCarro implements MouseListener {
           jtfEspaco.setFont(new Font("Arial", 0, 19));
           jtfEspaco.setPreferredSize(new Dimension(0, 0));
 
+          jlCriarCadastrar = new JLabel(new ImageIcon("src/main/java/Images/botao-criar-cadastrar.png"));
+          jlCriarCadastrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlCriarCadastrar.addMouseListener(this);
+
           layout.gridy = 0;
-          jpPanel8.add(jlOBS, layout);
+          jpPanel10.add(jlOBS, layout);
 
           layout.gridy = 1;
-          jpPanel8.add(jtaOBS, layout);
+          jpPanel10.add(jtaOBS, layout);
 
           layout.gridy = 2;
-          jpPanel8.add(jtfEspaco, layout);
+          jpPanel10.add(jtfEspaco, layout);
 
-     }
-
-     private void painel9() {
-
-          jpPanel9 = new JPanel(new GridBagLayout());
-          jpPanel9.setBackground(new Color(0, 0, 0, 0));
-          GridBagConstraints layout = new GridBagConstraints();
-          layout.anchor = GridBagConstraints.WEST;
-          layout.insets = new Insets(15, 98, 0, 0);
-
-          jlCadastrarCarro = new JLabel(new ImageIcon("src/main/java/Images/botao-cadastrar-carro.png"));
-          jlCadastrarCarro.setCursor(new Cursor(Cursor.HAND_CURSOR));
-          jlCadastrarCarro.addMouseListener(this);
-
-          layout.gridy = 0;
-          jpPanel9.add(jlCadastrarCarro, layout);
+          layout.gridy = 3;
+          jpPanel10.add(jlCriarCadastrar, layout);
 
      }
 
      @Override
      public void mouseClicked(MouseEvent e) {
           if (e.getSource() == jlVoltar) {
+
                new TelaMenu();
           }
+          if (e.getSource() == jlAtualizarKm) {
 
-          if (e.getSource() == jlCadastrarCarro) {
-
-               // conferir se os campos estão corretos
-               new TelaMenu();
+               // verifica a km com a anterior e
+               // exibe mensagem de km alterado
           }
+          if (e.getSource() == jlAtualizarPlaca) {
+
+               // verifica placa
+               // exibir uma mensagens de confirmação
+          }
+          if (e.getSource() == jlCriarCadastrar) {
+
+               // conferir os dados e criar revisao
+          }
+
      }
 
      @Override
@@ -600,5 +653,4 @@ public class TelaCadastroCarro implements MouseListener {
                // faz nada
           }
      }
-
 }
