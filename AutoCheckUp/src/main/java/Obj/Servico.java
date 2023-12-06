@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Servico implements Serializable {
+    String   tipoRevisao;
     Calendar data;
     int      quilometragem;
     float    valor;
@@ -22,6 +23,11 @@ public class Servico implements Serializable {
     public void addRevisaoFeita(Revisao revisao){
         revisao.atualiza(this.quilometragem, this.data);
         revisoesFeitas.add(revisao);
+    }
+
+    public Object[] toObjectArray(){
+        Object[] a = {tipoRevisao, data, quilometragem,valor, descricao};
+        return a;
     }
 
     //gets e sets

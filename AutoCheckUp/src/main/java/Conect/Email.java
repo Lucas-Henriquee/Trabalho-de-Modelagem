@@ -37,7 +37,7 @@ public class Email {
             String htmlBody = "<img src=\"cid:imagem\" height=\"120px\" width=\"120px\"> <p></p>"
                             + "<div> Olá, "+ nome +"</div>"
                             + "<p>Aqui está seu código de verificação do email: </p>"
-                            + "<p>"+ Criptografia.generate(email) + "</p>"
+                            + "<p>"+ Criptografia.email(email) + "</p>"
                             + "<p>Atenciosamente, <br> AutoCheck</p>";
 
             MimeBodyPart htmlPart = new MimeBodyPart();

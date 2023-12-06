@@ -1,11 +1,15 @@
 package Obj;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 
+import Conect.Conexao;
 import Conect.Criptografia;
 
 public class Cliente implements Serializable {
@@ -13,12 +17,14 @@ public class Cliente implements Serializable {
     private String email;
     private String senha;
     private String nome;
+    private boolean online;
     private int diasIntervaloNotificacao;
     private LocalDate ultimaAtualizacao;
 
     private List<Veiculo> veiculos;
 
     public Cliente(String nome){
+        boolean online = false;
         email = null;
         senha = null;
         this.nome = nome;
@@ -27,7 +33,12 @@ public class Cliente implements Serializable {
         this.diasIntervaloNotificacao = 3; 
     }
 
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
     public Cliente(String nome, String email, String senha){
+        boolean online = true;
         this.email = email;
         this.senha = Criptografia.senha(senha);
         this.nome = nome;
@@ -42,6 +53,18 @@ public class Cliente implements Serializable {
 
     public boolean removeVeiculo(Veiculo veiculo) {
         return this.veiculos.remove(veiculo);
+    }
+
+    public void save_in_db(){
+        Connection con = Conexao.getConnection();
+        String str = "INSERT INTO usuarios(nome, senha, email) VALUES ('"+nome+"', '"+senha+"', '"+email+"')";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(str);
+            pstmt.execute();
+            con.close();
+        } catch (SQLException e) {
+
+        }
     }
     
     public boolean checkAtualizacao(){
@@ -58,7 +81,9 @@ public class Cliente implements Serializable {
 
     //gets e sets
 
-    
+    public boolean getOnline(){
+        return online;
+    }
 
     public String getNome() {
         return nome;

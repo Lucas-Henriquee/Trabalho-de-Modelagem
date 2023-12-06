@@ -5,6 +5,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import Obj.Cliente;
+import Obj.Stream;
+import Obj.Veiculo;
+
 public class TelaMenu implements MouseListener {
 
      private JPanel jpPlano;
@@ -19,12 +23,14 @@ public class TelaMenu implements MouseListener {
      private JMenuItem jmItemSair;
      private JMenuItem jmItemLogoff;
 
-     public TelaMenu() {
+     private Cliente cliente;
 
-          inicializa();
+     public TelaMenu(Cliente cliente) {
+          this.cliente = cliente;
+          inicializa(cliente);
      }
 
-     private void inicializa() {
+     private void inicializa(Cliente cliente) {
 
           jpPlano = new JPanel(new GridBagLayout());
           GridBagConstraints layout = new GridBagConstraints();
@@ -35,7 +41,7 @@ public class TelaMenu implements MouseListener {
 
           painel2();
 
-          painel3();
+          painel3(cliente);
 
           painel4();
 
@@ -81,6 +87,16 @@ public class TelaMenu implements MouseListener {
           jmItemLogoff.addActionListener(new ActionListener() {
                @Override
                public void actionPerformed(ActionEvent e) {
+                    try {
+                         if(cliente.getOnline()){
+                              
+                         }
+                         else{
+                              Stream.save(cliente, "src/main/java/files/clientInfos.sav");
+                         }
+                    } catch (Exception exception) {
+
+                    }
                     new TelaLogin();
                }
           });
@@ -93,6 +109,11 @@ public class TelaMenu implements MouseListener {
                @Override
                public void actionPerformed(ActionEvent e) {
                     Tela.visor.dispose();
+                    try {
+                         Stream.save(cliente, "src/main/java/files/clientInfos.sav");
+                    } catch (Exception exception) {
+
+                    }
                     Runtime.getRuntime().exit(0);
                }
           });
@@ -136,7 +157,7 @@ public class TelaMenu implements MouseListener {
 
      }
 
-     private void painel3() {
+     private void painel3(Cliente cliente) {
 
           jpPanel3 = new JPanel(new GridBagLayout());
           jpPanel3.setBackground(new Color(0, 0, 0, 0));
@@ -144,7 +165,6 @@ public class TelaMenu implements MouseListener {
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(15, 33, 0, 0);
 
-          // ArrayList<Object[]> dados =
 
           DefaultTableModel tableModel = new DefaultTableModel(1, 0) {
                @Override
@@ -168,25 +188,29 @@ public class TelaMenu implements MouseListener {
           JScrollPane scrollPane = new JScrollPane(tabela);
           scrollPane.setPreferredSize(new java.awt.Dimension(277, 244));
 
-          /*
-           * if (dados != null) {
-           * for (Object[] linha : dados) {
-           * tableModel.addRow(linha);
-           * }
-           * }
-           * 
-           */
+
+          if (cliente.getOnline()){
+
+          }else{
+               if (cliente.getVeiculos() != null) {
+               for (Veiculo veiculo : cliente.getVeiculos()) {
+               Object[] linha = veiculo.toObjectArray();
+               tableModel.addRow(linha);
+               }
+               }
+
+          }
 
           JLabel jlCarros = new JLabel("               Nenhum carro cadastrado");
           jlCarros.setForeground(Color.black);
           jlCarros.setFont(new Font("Arial", 0, 14));
-          /*
-           * if(quantidadeCarros!= 0)
-           * jlCarros.setText(quantidadeCarros+" carros cadastrados");
-           * else
-           * jlCarros.setText("Nenhum carro cadastrados");
-           * }
-           */
+     
+          if(cliente.getVeiculos().size()!= 0)
+          jlCarros.setText(cliente.getVeiculos().size()+" carros cadastrados");
+          else
+          jlCarros.setText("Nenhum carro cadastrados");
+          
+          
 
           layout.gridy = 0;
           jpPanel3.add(scrollPane, layout);
@@ -216,7 +240,7 @@ public class TelaMenu implements MouseListener {
      @Override
      public void mouseClicked(MouseEvent e) {
           if (e.getSource() == jlAcoes) {
-               new TelaCadastroCarro();
+               new TelaCadastroCarro(cliente);
           }
      }
 

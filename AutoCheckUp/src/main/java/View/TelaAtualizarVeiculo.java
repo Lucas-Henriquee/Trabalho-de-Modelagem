@@ -9,6 +9,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 
+import Obj.Cliente;
+
 public class TelaAtualizarVeiculo implements MouseListener {
 
      private JPanel jpPlano;
@@ -28,8 +30,10 @@ public class TelaAtualizarVeiculo implements MouseListener {
      private JLabel jlAtualizarPlaca;
      private JLabel jlCriarCadastrar;
 
-     public TelaAtualizarVeiculo() {
+     private Cliente cliente;
 
+     public TelaAtualizarVeiculo(Cliente cliente) {
+          this.cliente = cliente;
           inicializa();
      }
 
@@ -607,7 +611,7 @@ public class TelaAtualizarVeiculo implements MouseListener {
      public void mouseClicked(MouseEvent e) {
           if (e.getSource() == jlVoltar) {
 
-               new TelaMenu();
+               new TelaMenu(cliente);
           }
           if (e.getSource() == jlAtualizarKm) {
 

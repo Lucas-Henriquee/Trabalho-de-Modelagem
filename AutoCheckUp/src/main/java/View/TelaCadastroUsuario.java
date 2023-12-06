@@ -5,6 +5,11 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import Checking.CheckUserData;
+import Conect.Criptografia;
+import Conect.Email;
+import Obj.Cliente;
+
 public class TelaCadastroUsuario implements MouseListener {
 
      private JPanel jpPlano;
@@ -14,6 +19,11 @@ public class TelaCadastroUsuario implements MouseListener {
 
      private JLabel jlVoltar;
      private JLabel jlCadastrar;
+
+     private JTextField jtfNome;
+     private JTextField jtfEmail;
+     private JPasswordField passwordField1;
+     private JPasswordField passwordField2;
 
      public TelaCadastroUsuario() {
 
@@ -103,7 +113,7 @@ public class TelaCadastroUsuario implements MouseListener {
           jlNome.setForeground(Color.black);
           jlNome.setFont(new Font("Arial", 1, 11));
 
-          JTextField jtfNome = new JTextField("Nome Completo");
+          jtfNome = new JTextField("Nome Completo");
           jtfNome.setForeground(Color.GRAY);
           jtfNome.setFont(new Font("Arial", 0, 15));
           jtfNome.setPreferredSize(new Dimension(277, 33));
@@ -157,7 +167,7 @@ public class TelaCadastroUsuario implements MouseListener {
           jlEmail.setForeground(Color.black);
           jlEmail.setFont(new Font("Arial", 1, 11));
 
-          JTextField jtfEmail = new JTextField("E-mail");
+          jtfEmail = new JTextField("E-mail");
           jtfEmail.setForeground(Color.GRAY);
           jtfEmail.setFont(new Font("Arial", 0, 15));
           jtfEmail.setPreferredSize(new Dimension(277, 33));
@@ -211,7 +221,7 @@ public class TelaCadastroUsuario implements MouseListener {
           jlSenha1.setForeground(Color.black);
           jlSenha1.setFont(new Font("Arial", 1, 11));
 
-          JPasswordField passwordField1 = new JPasswordField();
+          passwordField1 = new JPasswordField();
           passwordField1.setText("Senha   ");
           passwordField1.setForeground(Color.GRAY);
           passwordField1.setFont(new Font("Arial", 0, 15));
@@ -243,7 +253,7 @@ public class TelaCadastroUsuario implements MouseListener {
           jlSenha2.setForeground(Color.black);
           jlSenha2.setFont(new Font("Arial", 1, 11));
 
-          JPasswordField passwordField2 = new JPasswordField();
+          passwordField2 = new JPasswordField();
           passwordField2.setText("Senha   ");
           passwordField2.setForeground(Color.GRAY);
           passwordField2.setFont(new Font("Arial", 0, 15));
@@ -328,8 +338,28 @@ public class TelaCadastroUsuario implements MouseListener {
 
           if (e.getSource() == jlCadastrar) {
                // verificar senhas se sao iguais
-               // verificar email
-               new TelaLogin();
+               String password1 = new String(passwordField1.getPassword());
+               String password2 = new String(passwordField2.getPassword());
+               String nome = jtfNome.getText();
+               String email = jtfEmail.getText();
+               if(password1.compareTo(password2) == 0 && CheckUserData.checkName(nome) && CheckUserData.checkEmail(email)) {
+
+                    Email.envia(nome, email);
+                    // confirmar codigo
+                    // if(codigo == Criptografia.email() == codigo){
+                         Cliente cliente = new Cliente(nome, email, password1);
+                         cliente.save_in_db();
+                    // }
+                    new TelaLogin();
+               }
+               else{
+                    //mensagem erro
+                    passwordField1.setText("");
+                    passwordField2.setText("");
+                    jtfEmail.setText("");
+                    jtfNome.setText("");
+               }
+               
           }
      }
 

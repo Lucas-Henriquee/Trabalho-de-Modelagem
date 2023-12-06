@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.MaskFormatter;
 
+import Obj.Cliente;
+
 public class TelaCadastroCarro implements MouseListener {
 
      private JPanel jpPlano;
@@ -24,8 +26,10 @@ public class TelaCadastroCarro implements MouseListener {
      private JLabel jlVoltar;
      private JLabel jlCadastrarCarro;
 
-     public TelaCadastroCarro() {
+     private Cliente cliente;
 
+     public TelaCadastroCarro(Cliente cliente) {
+          this.cliente = cliente;
           inicializa();
 
      }
@@ -563,13 +567,13 @@ public class TelaCadastroCarro implements MouseListener {
      @Override
      public void mouseClicked(MouseEvent e) {
           if (e.getSource() == jlVoltar) {
-               new TelaMenu();
+               new TelaMenu(cliente);
           }
 
           if (e.getSource() == jlCadastrarCarro) {
 
                // conferir se os campos estão corretos
-               new TelaMenu();
+               new TelaMenu(cliente);
           }
      }
 

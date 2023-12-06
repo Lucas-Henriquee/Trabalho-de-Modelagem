@@ -6,13 +6,13 @@ import Conect.Criptografia;
 public class CriptografiaTest {
     @Test
     void testGenerate() {
-        String t = Criptografia.generate("teste@gmail.com");
-        Assertions.assertNotNull(t);
+        long t = Criptografia.email("teste@gmail.com");
+        Assertions.assertEquals(637296, t);
     }
 
     @Test
     void testSenha() {
         String t = Criptografia.senha("senha123");
-        Assertions.assertNotNull(t);
+        Assertions.assertEquals("55A5E9E78207B4DF8699D60886FA070079463547B095D1A05BC719BB4E6CD251", t);
     }
 }

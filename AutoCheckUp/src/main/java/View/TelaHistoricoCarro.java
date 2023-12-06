@@ -5,6 +5,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import Obj.Cliente;
+import Obj.Servico;
+import Obj.Veiculo;
+
 public class TelaHistoricoCarro implements MouseListener {
 
      private JPanel jpPlano;
@@ -20,12 +24,13 @@ public class TelaHistoricoCarro implements MouseListener {
      private JLabel jlExportar;
      private JLabel jlCompartilhar;
 
-     public TelaHistoricoCarro() {
-
-          inicializa();
+     private Cliente cliente;
+     public TelaHistoricoCarro(Cliente cliente, Veiculo veiculo) {
+          this.cliente = cliente;
+          inicializa(cliente, veiculo);
      }
 
-     private void inicializa() {
+     private void inicializa(Cliente cliente, Veiculo veiculo) {
 
           jpPlano = new JPanel(new GridBagLayout());
           GridBagConstraints layout = new GridBagConstraints();
@@ -42,7 +47,7 @@ public class TelaHistoricoCarro implements MouseListener {
 
           painel5();
 
-          painel6();
+          painel6(veiculo);
 
           painel7();
 
@@ -194,7 +199,7 @@ public class TelaHistoricoCarro implements MouseListener {
 
      }
 
-     private void painel6() {
+     private void painel6(Veiculo veiculo) {
 
           jpPanel6 = new JPanel(new GridBagLayout());
           jpPanel6.setBackground(new Color(0, 0, 0, 0));
@@ -239,14 +244,15 @@ public class TelaHistoricoCarro implements MouseListener {
           JScrollPane scrollPane = new JScrollPane(tabela);
           scrollPane.setPreferredSize(new java.awt.Dimension(277, 244));
 
-          /*
-           * if (dados != null) {
-           * for (Object[] linha : dados) {
-           * tableModel.addRow(linha);
-           * }
-           * }
-           * 
-           */
+          
+          if (veiculo.getServicos() != null) {
+               for (Servico servico : veiculo.getServicos()) {
+                    Object[] linha = servico.toObjectArray();
+                    tableModel.addRow(linha);
+               }
+          }
+          
+          
 
           layout.gridy = 0;
           jpPanel6.add(scrollPane, layout);
@@ -281,7 +287,7 @@ public class TelaHistoricoCarro implements MouseListener {
      @Override
      public void mouseClicked(MouseEvent e) {
           if (e.getSource() == jlVoltar) {
-               new TelaMenu();
+               new TelaMenu(cliente);
           }
 
           if (e.getSource() == jlExportar) {

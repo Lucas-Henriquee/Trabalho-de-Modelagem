@@ -2,8 +2,18 @@ package View;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
 import javax.swing.event.*;
+
+import Conect.Conexao;
+import Conect.Criptografia;
+import Obj.Cliente;
+import Obj.Stream;
 
 public class TelaLogin implements MouseListener {
 
@@ -22,6 +32,9 @@ public class TelaLogin implements MouseListener {
      private JLabel jlAcessarOffline;
 
      private JCheckBox jcbSenha;
+
+     private JPasswordField passwordField;
+     private JTextField jtfEmail;
 
      public TelaLogin() {
 
@@ -124,7 +137,7 @@ public class TelaLogin implements MouseListener {
           jlEmail.setForeground(Color.black);
           jlEmail.setFont(new Font("Arial", 1, 11));
 
-          JTextField jtfEmail = new JTextField("E-mail");
+          jtfEmail = new JTextField("E-mail");
           jtfEmail.setForeground(Color.GRAY);
           jtfEmail.setFont(new Font("Arial", 0, 15));
           jtfEmail.setPreferredSize(new Dimension(277, 33));
@@ -178,7 +191,7 @@ public class TelaLogin implements MouseListener {
           jlSenha.setForeground(Color.black);
           jlSenha.setFont(new Font("Arial", 1, 11));
 
-          JPasswordField passwordField = new JPasswordField();
+          passwordField = new JPasswordField();
           passwordField.setText("Senha   ");
           passwordField.setForeground(Color.GRAY);
           passwordField.setFont(new Font("Arial", 0, 15));
@@ -320,7 +333,26 @@ public class TelaLogin implements MouseListener {
           }
 
           if (e.getSource() == jlAcessar) {
+               String password = new String(passwordField.getPassword());
+               String email = jtfEmail.getText();
+               String password_cript = Criptografia.senha(password);
+               Connection con = Conexao.getConnection();
+                    String str = "SELECT email,senha,nome FROM usuarios WHERE email = '" + email + "' AND senha = '"+ password_cript+ "'";
+                    try {
+                         PreparedStatement pstmt = con.prepareStatement(str);
+                         ResultSet rs = pstmt.executeQuery();
 
+                         if (rs.next()){
+                              Cliente cliente = new Cliente(rs.getString("nome"), rs.getString("senha"), rs.getString("email"));
+                              new TelaMenu(cliente);
+                         }
+                         else{
+                              // fail message
+                         }
+                         con.close();
+                    } catch (SQLException ex) {
+
+                    }
                // conferir os dados e entrar
           }
 
@@ -330,9 +362,17 @@ public class TelaLogin implements MouseListener {
           }
 
           if (e.getSource() == jlAcessarOffline) {
-
-               // entrar offline
-               new TelaMenu();
+               Object object = null;
+               try {
+                    object = Stream.load("src/main/java/files/clientInfos.sav");
+               } catch (Exception exception) {
+                    
+               }
+               Cliente guest = Cliente.class.cast(object);
+               if(guest == null){
+                    guest = new Cliente("guest");
+               }
+               new TelaMenu(guest);
           }
      }
 

@@ -8,8 +8,6 @@ public class Veiculo implements Serializable {
 
     private String   placa;
     private String   modelo;
-    private String   tipoCombustivel;
-    private int      anoFab;
     private int      anoModelo;
     private int      quilometragem;
     private Calendar ultimaAtualizacao;
@@ -23,9 +21,7 @@ public class Veiculo implements Serializable {
     public Veiculo() {
         this.placa = "";
         this.modelo = "";
-        this.tipoCombustivel = "";
         this.quilometragem = 0;
-        this.anoFab = 0;
         this.anoModelo = 0;
         this.ultimaAtualizacao = Calendar.getInstance();
         this.observacao = "";
@@ -63,10 +59,12 @@ public class Veiculo implements Serializable {
         return servicos.remove(servico);
     }
 
-    //Gets e sets
-    public void setAnoFab(int anoFab) {
-        this.anoFab = anoFab;
+    public Object[] toObjectArray(){
+        Object[] a = {modelo};
+        return a;
     }
+
+    //Gets e sets
 
     public void setAnoModelo(int anoModelo) {
         this.anoModelo = anoModelo;
@@ -84,20 +82,12 @@ public class Veiculo implements Serializable {
         this.placa = placa;
     }
 
-    public void setTipoCombustivel(String tipoCombustivel) {
-        this.tipoCombustivel = tipoCombustivel;
-    }
-
     public List<Revisao> getRevisoes() {
         return this.revisoes;
     }
 
     public List<Servico> getServicos() {
         return this.servicos;
-    }
-
-    public int getAnoFab() {
-        return anoFab;
     }
 
     public int getAnoModelo() {
@@ -118,10 +108,6 @@ public class Veiculo implements Serializable {
         return quilometragem;
     }
 
-    public String getTipoCombustivel() {
-        return tipoCombustivel;
-    }
-
     public Calendar getUltimaAtualizacao() {
         return ultimaAtualizacao;
     }
@@ -132,9 +118,7 @@ public class Veiculo implements Serializable {
 
         str += "Modelo: " + this.modelo;
         str += "\nPlaca: " + this.placa;
-        str += "\nAno de Fabricação: " + this.anoFab;
         str += "\nAno do modelo: " + this.anoModelo;
-        str += "\nTipo de combustivel: " + this.tipoCombustivel;
         str += "\n ------ Revisões ------ \n";
 
         for(int i = 0; i < this.revisoes.size(); i++){
