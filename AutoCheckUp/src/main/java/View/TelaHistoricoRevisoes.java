@@ -1,5 +1,17 @@
 package View;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -9,8 +21,7 @@ import Obj.Cliente;
 import Obj.Servico;
 import Obj.Veiculo;
 
-public class TelaHistoricoCarro implements MouseListener {
-
+public class TelaHistoricoRevisoes implements MouseListener {
      private JPanel jpPlano;
      private JPanel jpPanel1;
      private JPanel jpPanel2;
@@ -25,7 +36,8 @@ public class TelaHistoricoCarro implements MouseListener {
      private JLabel jlCompartilhar;
 
      private Cliente cliente;
-     public TelaHistoricoCarro(Cliente cliente, Veiculo veiculo) {
+
+     public TelaHistoricoRevisoes(Cliente cliente, Veiculo veiculo) {
           this.cliente = cliente;
           inicializa(cliente, veiculo);
      }
@@ -101,7 +113,7 @@ public class TelaHistoricoCarro implements MouseListener {
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(10, 30, 0, 180);
 
-          JLabel jlHistorico = new JLabel("Histórico do veículo");
+          JLabel jlHistorico = new JLabel("Histórico de Revisões");
           jlHistorico.setForeground(Color.black);
           jlHistorico.setFont(new Font("Arial", 0, 20));
 
@@ -207,7 +219,7 @@ public class TelaHistoricoCarro implements MouseListener {
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(8, 30, 15, 0);
 
-          String[] colunas = { "Tipo de manutenção", "Data", "Km" };
+          String[] colunas = { "Data", "Km", "Intervalo(mês)", "Intervalo(km)" };
 
           // ArrayList<Object[]> dados =
 
@@ -219,20 +231,23 @@ public class TelaHistoricoCarro implements MouseListener {
           };
 
           JTable tabela = new JTable(tableModel);
-          Font fonte = tabela.getFont().deriveFont(15f);
+          Font fonte = tabela.getFont().deriveFont(14f);
           tabela.setFont(fonte);
           tabela.setRowHeight(tabela.getRowHeight() + 10 + 10);
 
           TableColumnModel columnModel = tabela.getColumnModel();
 
           TableColumn coluna1 = columnModel.getColumn(0);
-          coluna1.setPreferredWidth(158);
+          coluna1.setPreferredWidth(45);
 
           TableColumn coluna2 = columnModel.getColumn(1);
-          coluna2.setPreferredWidth(60);
+          coluna2.setPreferredWidth(45);
 
           TableColumn coluna3 = columnModel.getColumn(2);
-          coluna3.setPreferredWidth(60);
+          coluna3.setPreferredWidth(98);
+
+          TableColumn coluna4 = columnModel.getColumn(3);
+          coluna4.setPreferredWidth(89);
 
           JTableHeader cabecalho = tabela.getTableHeader();
           cabecalho.setFont(new Font("Arial", 1, 11));
@@ -244,15 +259,14 @@ public class TelaHistoricoCarro implements MouseListener {
           JScrollPane scrollPane = new JScrollPane(tabela);
           scrollPane.setPreferredSize(new java.awt.Dimension(277, 244));
 
-          
-          if (veiculo.getServicos() != null) {
-               for (Servico servico : veiculo.getServicos()) {
-                    Object[] linha = servico.toObjectArray();
-                    tableModel.addRow(linha);
+          if (veiculo != null) {
+               if (veiculo.getServicos() != null) {
+                    for (Servico servico : veiculo.getServicos()) {
+                         Object[] linha = servico.toObjectArray();
+                         tableModel.addRow(linha);
+                    }
                }
           }
-          
-          
 
           layout.gridy = 0;
           jpPanel6.add(scrollPane, layout);
@@ -327,5 +341,4 @@ public class TelaHistoricoCarro implements MouseListener {
                // faz nada
           }
      }
-
 }

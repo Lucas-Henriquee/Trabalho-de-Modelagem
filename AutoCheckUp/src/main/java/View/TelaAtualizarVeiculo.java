@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.text.ParseException;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
@@ -24,6 +25,7 @@ public class TelaAtualizarVeiculo implements MouseListener {
      private JPanel jpPanel8;
      private JPanel jpPanel9;
      private JPanel jpPanel10;
+     private JPanel jpPanel11;
 
      private JLabel jlVoltar;
      private JLabel jlAtualizarKm;
@@ -40,6 +42,7 @@ public class TelaAtualizarVeiculo implements MouseListener {
      private void inicializa() {
 
           jpPlano = new JPanel(new GridBagLayout());
+          jpPlano.setBackground(new Color(0, 0, 0, 0));
           GridBagConstraints layout = new GridBagConstraints();
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(0, 0, 0, 0);
@@ -63,6 +66,8 @@ public class TelaAtualizarVeiculo implements MouseListener {
           painel9();
 
           painel10();
+
+          painel11();
 
           layout.gridy = 0;
           jpPlano.add(jpPanel1, layout);
@@ -93,6 +98,9 @@ public class TelaAtualizarVeiculo implements MouseListener {
 
           layout.gridy = 9;
           jpPlano.add(jpPanel10, layout);
+
+          layout.gridy = 10;
+          jpPlano.add(jpPanel11, layout);
 
           new TelaFundo(jpPlano);
 
@@ -309,7 +317,7 @@ public class TelaAtualizarVeiculo implements MouseListener {
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(13, 30, 2, 0);
 
-          JLabel jlRevisao = new JLabel("  Crie/Cadastre uma nova revisão");
+          JLabel jlRevisao = new JLabel("        Cadastre um novo serviço");
           jlRevisao.setForeground(Color.black);
           jlRevisao.setFont(new Font("Arial", 1, 14));
 
@@ -605,6 +613,29 @@ public class TelaAtualizarVeiculo implements MouseListener {
           layout.gridy = 3;
           jpPanel10.add(jlCriarCadastrar, layout);
 
+     }
+
+     private void painel11() {
+
+          jpPanel11 = new JPanel(new GridBagLayout());
+          jpPanel11.setBackground(new Color(0, 0, 0, 0));
+          GridBagConstraints layout = new GridBagConstraints();
+          layout.anchor = GridBagConstraints.WEST;
+          layout.insets = new Insets(13, 30, 2, 0);
+
+          JLabel jlRevisao = new JLabel("  Cadastre uma nova revisão");
+          jlRevisao.setForeground(Color.black);
+          jlRevisao.setFont(new Font("Arial", 1, 14));
+
+          JLabel jlTipo = new JLabel("Tipo de manutenção*");
+          jlTipo.setForeground(Color.black);
+          jlTipo.setFont(new Font("Arial", 1, 11));
+
+          layout.gridy = 0;
+          jpPanel11.add(jlRevisao, layout);
+
+          layout.gridy = 1;
+          jpPanel11.add(jlTipo, layout);
      }
 
      @Override

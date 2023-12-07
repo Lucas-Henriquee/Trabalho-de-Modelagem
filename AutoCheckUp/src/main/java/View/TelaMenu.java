@@ -5,9 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import Obj.Cliente;
-import Obj.Stream;
-import Obj.Veiculo;
+import Moldes.JDialogPane;
+import Obj.*;
 
 public class TelaMenu implements MouseListener {
 
@@ -41,7 +40,7 @@ public class TelaMenu implements MouseListener {
 
           painel2();
 
-          painel3(cliente);
+          // painel3(cliente);
 
           painel4();
 
@@ -51,8 +50,8 @@ public class TelaMenu implements MouseListener {
           layout.gridy = 1;
           jpPlano.add(jpPanel2, layout);
 
-          layout.gridy = 2;
-          jpPlano.add(jpPanel3, layout);
+          // layout.gridy = 2;
+          // jpPlano.add(jpPanel3, layout);
 
           layout.gridy = 3;
           jpPlano.add(jpPanel4, layout);
@@ -88,10 +87,9 @@ public class TelaMenu implements MouseListener {
                @Override
                public void actionPerformed(ActionEvent e) {
                     try {
-                         if(cliente.getOnline()){
-                              
-                         }
-                         else{
+                         if (cliente.getOnline()) {
+
+                         } else {
                               Stream.save(cliente, "src/main/java/files/clientInfos.sav");
                          }
                     } catch (Exception exception) {
@@ -165,7 +163,6 @@ public class TelaMenu implements MouseListener {
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(15, 33, 0, 0);
 
-
           DefaultTableModel tableModel = new DefaultTableModel(1, 0) {
                @Override
                public boolean isCellEditable(int row, int column) {
@@ -174,43 +171,41 @@ public class TelaMenu implements MouseListener {
           };
 
           JTable tabela = new JTable(tableModel);
-          Font fonte = tabela.getFont().deriveFont(15f);
+          Font fonte = tabela.getFont()
+                    .deriveFont(15f);
           tabela.setFont(fonte);
           tabela.setRowHeight(tabela.getRowHeight() + 10 + 10);
 
-          JTableHeader cabecalho = tabela.getTableHeader();
-          cabecalho.setFont(new Font("Arial", 1, 11));
+          tabela.setTableHeader(null);
 
           DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
           cellRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
           tabela.setDefaultRenderer(Object.class, cellRenderer);
 
           JScrollPane scrollPane = new JScrollPane(tabela);
-          scrollPane.setPreferredSize(new java.awt.Dimension(277, 244));
+          scrollPane.setPreferredSize(new Dimension(277, 244));
 
+          if (cliente.getOnline()) {
 
-          if (cliente.getOnline()){
-
-          }else{
+          } else {
                if (cliente.getVeiculos() != null) {
-               for (Veiculo veiculo : cliente.getVeiculos()) {
-               Object[] linha = veiculo.toObjectArray();
-               tableModel.addRow(linha);
-               }
+                    for (Veiculo veiculo : cliente.getVeiculos()) {
+                         Object[] linha = veiculo.toObjectArray();
+                         tableModel.addRow(linha);
+                    }
                }
 
           }
 
-          JLabel jlCarros = new JLabel("               Nenhum carro cadastrado");
+          JLabel jlCarros = new JLabel(
+                    "               Nenhum carro cadastrado");
           jlCarros.setForeground(Color.black);
           jlCarros.setFont(new Font("Arial", 0, 14));
-     
-          if(cliente.getVeiculos().size()!= 0)
-          jlCarros.setText(cliente.getVeiculos().size()+" carros cadastrados");
+
+          if (cliente.getVeiculos().size() != 0)
+               jlCarros.setText(cliente.getVeiculos().size() + " carros cadastrados");
           else
-          jlCarros.setText("Nenhum carro cadastrados");
-          
-          
+               jlCarros.setText("Nenhum carro cadastrados");
 
           layout.gridy = 0;
           jpPanel3.add(scrollPane, layout);
@@ -218,6 +213,7 @@ public class TelaMenu implements MouseListener {
           layout.gridy = 1;
           jpPanel3.add(jlCarros, layout);
 
+          Tela.visor.pack();
      }
 
      private void painel4() {

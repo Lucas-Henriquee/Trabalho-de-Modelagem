@@ -12,6 +12,7 @@ import javax.swing.event.*;
 
 import Conect.Conexao;
 import Conect.Criptografia;
+import Moldes.JDialogPane;
 import Obj.Cliente;
 import Obj.Stream;
 
@@ -275,6 +276,7 @@ public class TelaLogin implements MouseListener {
           jlEsqueci = new JLabel("Esqueci minha senha");
           jlEsqueci.setFont(new Font("Arial", 1, 11));
           jlEsqueci.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlEsqueci.addMouseListener(this);
 
           jpPanel4.add(jlDEspaco, 0);
           jpPanel4.add(jcbSenha, 1);
@@ -329,7 +331,7 @@ public class TelaLogin implements MouseListener {
           }
           if (e.getSource() == jlEsqueci) {
 
-               // colocar o e-mail e enviar o token
+               new JDialogPane(jpPlano, "EsqueciSenha");
           }
 
           if (e.getSource() == jlAcessar) {
@@ -337,23 +339,23 @@ public class TelaLogin implements MouseListener {
                String email = jtfEmail.getText();
                String password_cript = Criptografia.senha(password);
                Connection con = Conexao.getConnection();
-                    String str = "SELECT email,senha,nome FROM usuarios WHERE email = '" + email + "' AND senha = '"+ password_cript+ "'";
-                    try {
-                         PreparedStatement pstmt = con.prepareStatement(str);
-                         ResultSet rs = pstmt.executeQuery();
+               String str = "SELECT email,senha,nome FROM usuarios WHERE email = '" + email + "' AND senha = '"
+                         + password_cript + "'";
+               try {
+                    PreparedStatement pstmt = con.prepareStatement(str);
+                    ResultSet rs = pstmt.executeQuery();
 
-                         if (rs.next()){
-                              Cliente cliente = new Cliente(rs.getString("nome"), rs.getString("senha"), rs.getString("email"));
-                              new TelaMenu(cliente);
-                         }
-                         else{
-                              // fail message
-                         }
-                         con.close();
-                    } catch (SQLException ex) {
-
+                    if (rs.next()) {
+                         Cliente cliente = new Cliente(rs.getString("nome"), rs.getString("senha"),
+                                   rs.getString("email"));
+                         new TelaMenu(cliente);
+                    } else {
+                         new JDialogPane(jpPlano, "Error");
                     }
-               // conferir os dados e entrar
+                    con.close();
+               } catch (SQLException ex) {
+
+               }
           }
 
           if (e.getSource() == jlCadastrar) {
@@ -362,14 +364,15 @@ public class TelaLogin implements MouseListener {
           }
 
           if (e.getSource() == jlAcessarOffline) {
+
                Object object = null;
                try {
                     object = Stream.load("src/main/java/files/clientInfos.sav");
                } catch (Exception exception) {
-                    
+
                }
                Cliente guest = Cliente.class.cast(object);
-               if(guest == null){
+               if (guest == null) {
                     guest = new Cliente("guest");
                }
                new TelaMenu(guest);

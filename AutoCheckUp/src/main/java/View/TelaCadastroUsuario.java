@@ -6,8 +6,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import Checking.CheckUserData;
-import Conect.Criptografia;
 import Conect.Email;
+import Moldes.JDialogPane;
 import Obj.Cliente;
 
 public class TelaCadastroUsuario implements MouseListener {
@@ -277,9 +277,36 @@ public class TelaCadastroUsuario implements MouseListener {
                }
           });
 
+          JCheckBox jcbSenha = new JCheckBox("Exibir senha");
+          jcbSenha.setPreferredSize(new Dimension(150, 15));
+          Font fonte = new Font("Arial", 1, 11);
+          jcbSenha.setFont(fonte);
+          jcbSenha.setBackground(new Color(0, 0, 0, 0));
+          jcbSenha.setOpaque(false);
+          jcbSenha.setFocusPainted(false);
+          jcbSenha.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+          jcbSenha.addItemListener(new ItemListener() {
+               @Override
+               public void itemStateChanged(ItemEvent e) {
+                    int state = e.getStateChange();
+                    if (state == ItemEvent.SELECTED) {
+                         passwordField1.setEchoChar((char) 0);
+                         passwordField2.setEchoChar((char) 0);
+                    } else {
+                         passwordField1.setEchoChar('\u2022');
+                         passwordField2.setEchoChar('\u2022');
+                    }
+               }
+          });
+
           JLabel jlEspaco5 = new JLabel("aaaaaaaaaaaaaaaaaaa");
           jlEspaco5.setForeground(new Color(0, 0, 0, 0));
           jlEspaco5.setFont(new Font("Arial", 0, 30));
+
+          JLabel jlEspaco6 = new JLabel("aaaaaaaaaaaaaaaaaaa");
+          jlEspaco6.setForeground(new Color(0, 0, 0, 0));
+          jlEspaco6.setFont(new Font("Arial", 0, 10));
 
           jlCadastrar = new JLabel(new ImageIcon("src/main/java/Images/botao-cadastrar-usuario-2.png"));
           jlCadastrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -322,9 +349,15 @@ public class TelaCadastroUsuario implements MouseListener {
           jpPanel3.add(passwordField2, layout);
 
           layout.gridy = 12;
-          jpPanel3.add(jlEspaco5, layout);
+          jpPanel3.add(jlEspaco6, layout);
 
           layout.gridy = 13;
+          jpPanel3.add(jcbSenha, layout);
+
+          layout.gridy = 14;
+          jpPanel3.add(jlEspaco5, layout);
+
+          layout.gridy = 15;
           jpPanel3.add(jlCadastrar, layout);
 
      }
@@ -342,24 +375,25 @@ public class TelaCadastroUsuario implements MouseListener {
                String password2 = new String(passwordField2.getPassword());
                String nome = jtfNome.getText();
                String email = jtfEmail.getText();
-               if(password1.compareTo(password2) == 0 && CheckUserData.checkName(nome) && CheckUserData.checkEmail(email)) {
+               if (password1.compareTo(password2) == 0 && CheckUserData.checkName(nome)
+                         && CheckUserData.checkEmail(email)) {
 
                     Email.envia(nome, email);
                     // confirmar codigo
                     // if(codigo == Criptografia.email() == codigo){
-                         Cliente cliente = new Cliente(nome, email, password1);
-                         cliente.save_in_db();
+                    Cliente cliente = new Cliente(nome, email, password1);
+                    cliente.save_in_db();
                     // }
+                    new JDialogPane(jpPlano, "Confirmacao");
                     new TelaLogin();
-               }
-               else{
-                    //mensagem erro
+               } else {
+                    new JDialogPane(jpPlano, "Error");
                     passwordField1.setText("");
                     passwordField2.setText("");
                     jtfEmail.setText("");
                     jtfNome.setText("");
                }
-               
+
           }
      }
 

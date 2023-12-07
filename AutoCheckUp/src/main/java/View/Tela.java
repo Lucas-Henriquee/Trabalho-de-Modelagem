@@ -24,8 +24,7 @@ public class Tela {
           visor.setOpacity(0.5f);
           visor.setBackground(new Color(0, 0, 0, 0));
 
-          //new TelaAtualizarVeiculo();
-          new TelaEntrada();
-
+          // new TelaMenu(null);
+          new TelaLogin( );
      }
 }
