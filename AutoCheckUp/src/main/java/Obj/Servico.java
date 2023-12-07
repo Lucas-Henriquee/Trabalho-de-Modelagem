@@ -9,7 +9,6 @@ public class Servico implements Serializable {
     String   tipoRevisao;
     Calendar data;
     int      quilometragem;
-    float    valor;
     String   descricao;
 
     List<Revisao> revisoesFeitas;
@@ -26,7 +25,7 @@ public class Servico implements Serializable {
     }
 
     public Object[] toObjectArray(){
-        Object[] a = {tipoRevisao, data, quilometragem,valor, descricao};
+        Object[] a = {tipoRevisao, data, quilometragem, descricao};
         return a;
     }
 
@@ -48,10 +47,6 @@ public class Servico implements Serializable {
         return revisoesFeitas;
     }
 
-    public float getValor() {
-        return valor;
-    }
-
     public void setData(Calendar data) {
         this.data = data;
     }
@@ -64,7 +59,4 @@ public class Servico implements Serializable {
         this.quilometragem = quilometragem;
     }
 
-    public void setValor(float valor) {
-        this.valor = valor;
-    }
 }

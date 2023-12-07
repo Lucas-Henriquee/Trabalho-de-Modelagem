@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.text.ParseException;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;

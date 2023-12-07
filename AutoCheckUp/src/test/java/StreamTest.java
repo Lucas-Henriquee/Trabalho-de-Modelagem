@@ -2,6 +2,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import Obj.Cliente;
 import Obj.Revisao;
 import Obj.Stream;
 import Obj.Veiculo;
@@ -14,7 +15,8 @@ public class StreamTest {
 
     @Test
     public void testStream(){
-        Veiculo veiculo = new Veiculo();
+        Cliente cliente = new Cliente("fulano");
+        Veiculo veiculo = new Veiculo(cliente, PLACA,"Gol", 1239,122,"");
         veiculo.setPlaca(PLACA);
 
         Revisao rev = new Revisao(5000, 6);

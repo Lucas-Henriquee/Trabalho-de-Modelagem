@@ -8,7 +8,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.MaskFormatter;
 
+import Checking.CheckVehicleData;
 import Obj.Cliente;
+import Obj.Veiculo;
 
 public class TelaCadastroCarro implements MouseListener {
 
@@ -27,6 +29,13 @@ public class TelaCadastroCarro implements MouseListener {
      private JLabel jlCadastrarCarro;
 
      private Cliente cliente;
+
+     private JTextField jtfNome;
+     private JTextField jtfAno;
+     private JTextField jtfKm;
+     private JFormattedTextField jFormattedTextData;
+     private JTextField jtfP;
+     private JTextArea jtaOBS;
 
      public TelaCadastroCarro(Cliente cliente) {
           this.cliente = cliente;
@@ -147,7 +156,7 @@ public class TelaCadastroCarro implements MouseListener {
           jlNome.setForeground(Color.black);
           jlNome.setFont(new Font("Arial", 1, 11));
 
-          JTextField jtfNome = new JTextField("Nome do veículo");
+          jtfNome = new JTextField("Nome do veículo");
           jtfNome.setForeground(Color.GRAY);
           jtfNome.setFont(new Font("Arial", 0, 15));
           jtfNome.setPreferredSize(new Dimension(277, 33));
@@ -234,7 +243,7 @@ public class TelaCadastroCarro implements MouseListener {
           layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(0, 30, 8, 0);
 
-          JTextField jtfAno = new JTextField("Ano do veículo");
+          jtfAno = new JTextField("Ano do veículo");
           jtfAno.setForeground(Color.GRAY);
           jtfAno.setFont(new Font("Arial", 0, 15));
           jtfAno.setPreferredSize(new Dimension(120, 32));
@@ -280,7 +289,7 @@ public class TelaCadastroCarro implements MouseListener {
                }
           });
 
-          JTextField jtfKm = new JTextField("Km atual");
+          jtfKm = new JTextField("Km atual");
           jtfKm.setForeground(Color.GRAY);
           jtfKm.setFont(new Font("Arial", 0, 15));
           jtfKm.setPreferredSize(new Dimension(125, 32));
@@ -363,13 +372,13 @@ public class TelaCadastroCarro implements MouseListener {
           MaskFormatter mascaraData = null;
 
           try {
-               mascaraData = new MaskFormatter("##/##/##");
+               mascaraData = new MaskFormatter("##/##/####");
           } catch (ParseException excp) {
                System.err.println("Erro na formatação: " + excp.getMessage());
                System.exit(-1);
           }
 
-          JFormattedTextField jFormattedTextData = new JFormattedTextField(mascaraData);
+          jFormattedTextData = new JFormattedTextField(mascaraData);
 
           jFormattedTextData.setText("DD/MM/AAAA");
           jFormattedTextData.setForeground(Color.GRAY);
@@ -418,7 +427,7 @@ public class TelaCadastroCarro implements MouseListener {
                }
           });
 
-          JTextField jtfP = new JTextField("Placa");
+          jtfP = new JTextField("Placa");
           jtfP.setForeground(Color.GRAY);
           jtfP.setFont(new Font("Arial", 0, 15));
           jtfP.setPreferredSize(new Dimension(125, 32));
@@ -484,7 +493,7 @@ public class TelaCadastroCarro implements MouseListener {
           jlOBS.setForeground(Color.black);
           jlOBS.setFont(new Font("Arial", 1, 11));
 
-          JTextArea jtaOBS = new JTextArea("OBS:");
+          jtaOBS = new JTextArea("OBS:");
           jtaOBS.setForeground(Color.GRAY);
           jtaOBS.setBorder(BorderFactory.createLineBorder(Color.GRAY));
           jtaOBS.setFont(new Font("Arial", 0, 15));
@@ -571,8 +580,20 @@ public class TelaCadastroCarro implements MouseListener {
           }
 
           if (e.getSource() == jlCadastrarCarro) {
-
-               // conferir se os campos estão corretos
+               String nome = jtfNome.getText();
+               String ano = jtfAno.getText();
+               String km = jtfKm.getText();
+               String data = jFormattedTextData.getText(); 
+               String placa = jtfP.getText();
+               String observacao = jtaOBS.getText();
+               if(CheckVehicleData.CheckKm(km) && CheckVehicleData.CheckAno(ano) && CheckVehicleData.CheckManutencao(data, Integer.parseInt(ano)) && CheckVehicleData.CheckPlaca(placa));
+                    Veiculo veiculo = new Veiculo(cliente, placa, nome, Integer.parseInt(ano), Integer.parseInt(km), observacao);
+                    if(data != null){
+                         veiculo.addAtualizacao(data);
+                    }
+                    if(cliente.getOnline()){
+                         veiculo.save_in_db();
+                    }
                new TelaMenu(cliente);
           }
      }

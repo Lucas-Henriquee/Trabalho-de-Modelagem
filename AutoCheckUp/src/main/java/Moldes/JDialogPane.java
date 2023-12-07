@@ -7,6 +7,9 @@ import javax.swing.border.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import Conect.Criptografia;
+import Obj.Cliente;
+import Obj.Veiculo;
 import View.Tela;
 import View.TelaAtualizarVeiculo;
 import View.TelaHistoricoRevisoes;
@@ -37,8 +40,37 @@ public class JDialogPane implements MouseListener {
      private JLabel jlHistoricoRevisoes;
      private JLabel jlExcluir;
 
+     private JPanel jpTokenCadastro;
+     private JLabel jlEnviarTokenCadastra;
+
+     private JTextField jtfEmail;
+     private JTextField jtfSenha1;
+     private JTextField jtfSenha2;
+
+     private String email;
+     private String nome;
+     private String senha;
+
+     private Cliente cliente;
+     private Veiculo veiculo;
+
      public JDialogPane(JPanel jp, String tipo) {
 
+          this.jp = jp;
+          inicializa(jp, tipo);
+     }
+
+     public JDialogPane(JPanel jp, String tipo, String email, String nome, String senha) {
+          this.email = email;
+          this.nome = nome;
+          this.senha = senha;
+          this.jp = jp;
+          inicializa(jp, tipo);
+     }
+
+     public JDialogPane(JPanel jp, String tipo, Cliente cliente, Veiculo veiculo){
+          this.cliente = cliente;
+          this.veiculo = veiculo;
           this.jp = jp;
           inicializa(jp, tipo);
      }
@@ -51,7 +83,7 @@ public class JDialogPane implements MouseListener {
 
                dialog.setSize(300, 210);
                Point panelLocation = jp.getLocationOnScreen();
-               dialog.setLocation(((panelLocation.x + jp.getWidth() / 2) - dialog.getWidth() / 2 - 30),
+               dialog.setLocation(((panelLocation.x + jp.getWidth() / 2) - dialog.getWidth() / 2 - 60),
                          ((panelLocation.y + jp.getHeight() / 2) - dialog.getHeight() / 2));
                dialog.setUndecorated(true);
 
@@ -72,6 +104,10 @@ public class JDialogPane implements MouseListener {
                     case "EsperarToken":
                          jPanelToken();
                          jpDialog.add(jpToken);
+                         break;
+                    case "EsperarTokenCadastra":
+                         jPanelTokenCadastro();;
+                         jpDialog.add(jpTokenCadastro);
                          break;
                     case "SenhaNova":
                          jpNovaSenha();
@@ -144,7 +180,7 @@ public class JDialogPane implements MouseListener {
           jlEsqueci.setForeground(Color.black);
           jlEsqueci.setFont(new Font("Arial", 1, 12));
 
-          JTextField jtfEmail = new JTextField(" ");
+          jtfEmail = new JTextField(" ");
           jtfEmail.setForeground(Color.BLACK);
           jtfEmail.setFont(new Font("Arial", 0, 15));
           jtfEmail.setPreferredSize(new Dimension(210, 33));
@@ -177,7 +213,7 @@ public class JDialogPane implements MouseListener {
           jlEsqueci.setForeground(Color.black);
           jlEsqueci.setFont(new Font("Arial", 1, 12));
 
-          JTextField jtfEmail = new JTextField(" ");
+          jtfEmail = new JTextField(" ");
           jtfEmail.setForeground(Color.BLACK);
           jtfEmail.setFont(new Font("Arial", 0, 15));
           jtfEmail.setPreferredSize(new Dimension(210, 33));
@@ -256,7 +292,7 @@ public class JDialogPane implements MouseListener {
           jlNovaSenha.setForeground(Color.black);
           jlNovaSenha.setFont(new Font("Arial", 1, 12));
 
-          JTextField jtfSenha1 = new JTextField("Senha");
+          jtfSenha1 = new JTextField("Senha");
           jtfSenha1.setForeground(Color.gray);
           jtfSenha1.setFont(new Font("Arial", 0, 15));
           jtfSenha1.setPreferredSize(new Dimension(210, 33));
@@ -306,7 +342,7 @@ public class JDialogPane implements MouseListener {
           jlConfirmacao.setForeground(Color.black);
           jlConfirmacao.setFont(new Font("Arial", 1, 12));
 
-          JTextField jtfSenha2 = new JTextField("Senha");
+          jtfSenha2 = new JTextField("Senha");
           jtfSenha2.setForeground(Color.gray);
           jtfSenha2.setFont(new Font("Arial", 0, 15));
           jtfSenha2.setPreferredSize(new Dimension(210, 33));
@@ -424,14 +460,14 @@ public class JDialogPane implements MouseListener {
           jpOpcoes.setBackground(new Color(0, 0, 0, 0));
 
           GridBagConstraints layout = new GridBagConstraints();
-          layout.anchor = GridBagConstraints.CENTER;
+          layout.anchor = GridBagConstraints.WEST;
           layout.insets = new Insets(15, 17, 0, 25);
 
           JLabel jlOpcoes = new JLabel("Selecione uma das opcões abaixo");
           jlOpcoes.setForeground(Color.black);
           jlOpcoes.setFont(new Font("Arial", 1, 15));
 
-          JPanel jpOpcoes1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 10));
+          JPanel jpOpcoes1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 10));
           jpOpcoes1.setBackground(new Color(0, 0, 0, 0));
 
           jlAlterarVeiculo = new JLabel("Alterar veículo");
@@ -440,16 +476,18 @@ public class JDialogPane implements MouseListener {
           jlAlterarVeiculo.setCursor(new Cursor(Cursor.HAND_CURSOR));
           jlAlterarVeiculo.addMouseListener(this);
 
-          jlExcluir = new JLabel("Excluir veículo");
-          jlExcluir.setForeground(Color.black);
-          jlExcluir.setFont(new Font("Arial", 1, 12));
-          jlExcluir.setCursor(new Cursor(Cursor.HAND_CURSOR));
-          jlExcluir.addMouseListener(this);
+          jlHistoricoServicos = new JLabel("Histórico de serviços");
+          jlHistoricoServicos.setForeground(Color.black);
+          jlHistoricoServicos.setFont(new Font("Arial", 1, 12));
+          jlHistoricoServicos.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlHistoricoServicos.addMouseListener(this);
+
 
           jpOpcoes1.add(jlAlterarVeiculo);
-          jpOpcoes1.add(jlExcluir);
+          jpOpcoes1.add(jlHistoricoServicos);
+          
 
-          JPanel jpOpcoes2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+          JPanel jpOpcoes2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 10));
           jpOpcoes2.setBackground(new Color(0, 0, 0, 0));
 
           jlHistoricoRevisoes = new JLabel("Histórico de revisões");
@@ -458,14 +496,15 @@ public class JDialogPane implements MouseListener {
           jlHistoricoRevisoes.setCursor(new Cursor(Cursor.HAND_CURSOR));
           jlHistoricoRevisoes.addMouseListener(this);
 
-          jlHistoricoServicos = new JLabel("Histórico de serviços");
-          jlHistoricoServicos.setForeground(Color.black);
-          jlHistoricoServicos.setFont(new Font("Arial", 1, 12));
-          jlHistoricoServicos.setCursor(new Cursor(Cursor.HAND_CURSOR));
-          jlHistoricoServicos.addMouseListener(this);
+          jlExcluir = new JLabel("Excluir veículo");
+          jlExcluir.setForeground(Color.black);
+          jlExcluir.setFont(new Font("Arial", 1, 12));
+          jlExcluir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlExcluir.addMouseListener(this);
 
+          
           jpOpcoes2.add(jlHistoricoRevisoes);
-          jpOpcoes2.add(jlHistoricoServicos);
+          jpOpcoes2.add(jlExcluir);
 
           layout.gridy = 0;
           jpOpcoes.add(jlOpcoes, layout);
@@ -477,6 +516,38 @@ public class JDialogPane implements MouseListener {
           jpOpcoes.add(jpOpcoes2, layout);
      }
 
+     private void jPanelTokenCadastro(){
+
+          jpTokenCadastro = new JPanel(new GridBagLayout());
+          jpTokenCadastro.setBackground(new Color(0, 0, 0, 0));
+
+          GridBagConstraints layout = new GridBagConstraints();
+          layout.anchor = GridBagConstraints.CENTER;
+          layout.insets = new Insets(15, 17, 0, 25);
+
+          JLabel jlEsqueci = new JLabel("Digite o token enviado ao seu e-mail");
+          jlEsqueci.setForeground(Color.black);
+          jlEsqueci.setFont(new Font("Arial", 1, 12));
+
+          jtfEmail = new JTextField(" ");
+          jtfEmail.setForeground(Color.BLACK);
+          jtfEmail.setFont(new Font("Arial", 0, 15));
+          jtfEmail.setPreferredSize(new Dimension(210, 33));
+
+          jlEnviarTokenCadastra = new JLabel(new ImageIcon("src/main/java/Images/botao-enviar.png"));
+          jlEnviarTokenCadastra.setCursor(new Cursor(Cursor.HAND_CURSOR));
+          jlEnviarTokenCadastra.addMouseListener(this);
+
+          layout.gridy = 0;
+          jpTokenCadastro.add(jlEsqueci, layout);
+
+          layout.gridy = 1;
+          jpTokenCadastro.add(jtfEmail, layout);
+
+          layout.gridy = 2;
+          jpTokenCadastro.add(jlEnviarTokenCadastra, layout);
+     }
+
      @Override
      public void mouseClicked(MouseEvent e) {
 
@@ -484,6 +555,21 @@ public class JDialogPane implements MouseListener {
 
                dialog.dispose();
 
+          }
+
+          if (e.getSource() == jlEnviarTokenCadastra){
+               if(Criptografia.email(this.email) == Integer.parseInt(jtfEmail.getText().trim())){
+                    new JDialogPane(this.jp, "Confirmacao");
+                    Cliente cliente = new Cliente(nome, email, senha);
+                    cliente.save_in_db();
+                    dialog.dispose();
+                    new TelaLogin();
+               }
+               else{
+                    new JDialogPane(this.jp, "Error");
+                    jtfEmail.setText("");
+               }
+               
           }
 
           if (e.getSource() == jlEnviarEmail) {
@@ -526,7 +612,7 @@ public class JDialogPane implements MouseListener {
           }
 
           if (e.getSource() == jlExcluir) {
-               // excluir o veiculo
+               cliente.removeVeiculo(veiculo);
           }
 
           if (e.getSource() == jlHistoricoRevisoes) {

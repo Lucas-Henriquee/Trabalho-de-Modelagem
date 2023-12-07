@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import Obj.*;
 
 public class VeiculoTest {
-    
-    Veiculo veiculo = new Veiculo();
+    Cliente cliente = new Cliente(null);
+    Veiculo veiculo = new Veiculo(cliente, "aaa","aaa",19,12,"");
     
     @Test
     void testAddKm(){

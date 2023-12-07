@@ -8,7 +8,6 @@ import javax.swing.event.*;
 import Checking.CheckUserData;
 import Conect.Email;
 import Moldes.JDialogPane;
-import Obj.Cliente;
 
 public class TelaCadastroUsuario implements MouseListener {
 
@@ -375,17 +374,9 @@ public class TelaCadastroUsuario implements MouseListener {
                String password2 = new String(passwordField2.getPassword());
                String nome = jtfNome.getText();
                String email = jtfEmail.getText();
-               if (password1.compareTo(password2) == 0 && CheckUserData.checkName(nome)
-                         && CheckUserData.checkEmail(email)) {
-
+               if (password1.compareTo(password2) == 0 && CheckUserData.checkName(nome) && CheckUserData.checkEmail(email)) {
                     Email.envia(nome, email);
-                    // confirmar codigo
-                    // if(codigo == Criptografia.email() == codigo){
-                    Cliente cliente = new Cliente(nome, email, password1);
-                    cliente.save_in_db();
-                    // }
-                    new JDialogPane(jpPlano, "Confirmacao");
-                    new TelaLogin();
+                    new JDialogPane(jpPlano, "EsperarTokenCadastra", email, nome, password1);
                } else {
                     new JDialogPane(jpPlano, "Error");
                     passwordField1.setText("");

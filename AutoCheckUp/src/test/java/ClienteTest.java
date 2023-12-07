@@ -13,7 +13,7 @@ public class ClienteTest {
         Assertions.assertEquals("Fulano", cliente.getNome());
         Assertions.assertEquals(3, cliente.getDiasIntervaloNotificacao());
 
-        cliente.addVeiculo(new Veiculo());
+        new Veiculo(cliente,"AAA1A11","gol",1997,19200,"");
         Assertions.assertEquals(1, cliente.getVeiculos().size());
     }
 }

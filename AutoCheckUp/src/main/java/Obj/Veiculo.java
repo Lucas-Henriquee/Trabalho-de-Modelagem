@@ -1,5 +1,7 @@
 package Obj;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,16 +20,17 @@ public class Veiculo implements Serializable {
 
 
     //Construtor
-    public Veiculo() {
-        this.placa = "";
-        this.modelo = "";
-        this.quilometragem = 0;
-        this.anoModelo = 0;
-        this.ultimaAtualizacao = Calendar.getInstance();
-        this.observacao = "";
+    public Veiculo(Cliente cliente, String placa, String modelo, int anoModelo, int quilometragem, String observacao) {
+        this.placa = placa;
+        this.modelo = modelo;
+        this.quilometragem = quilometragem;
+        this.anoModelo = anoModelo;
+        this.ultimaAtualizacao = null;
+        this.observacao = observacao;
 
         this.revisoes = new LinkedList<Revisao>();
         this.servicos = new LinkedList<Servico>();
+        cliente.addVeiculo(this);
     }
 
     /**
@@ -39,7 +42,16 @@ public class Veiculo implements Serializable {
             throw new IllegalArgumentException();
         }else{
             this.quilometragem = km;
-            this.ultimaAtualizacao = Calendar.getInstance();
+        }
+    }
+
+    public void addAtualizacao(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();     
+        try {
+            c.setTime(sdf.parse(str));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
@@ -49,6 +61,10 @@ public class Veiculo implements Serializable {
 
     public void addServico(Servico servico) {
         this.servicos.add(servico);
+    }
+
+    public void save_in_db(){
+
     }
 
     public boolean removeRevisao(Revisao revisao) {
